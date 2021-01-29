@@ -1,0 +1,235 @@
+{
+  "namespace": "com.dsg.customerorder.avro",
+  "name": "Order",
+  "type": "record",
+  "doc": "Defines specifications of the order",
+  "fields": [            {
+                           "name": "orderNumber",
+                           "type": "string"
+                         }, {
+                           "name": "state",
+                           "type": {
+                             "name": "State",
+                             "type": "enum",
+                             "symbols": ["placed", "in_review","canceled","ready_to_fulfill", "in_fulfillment","fulfilled"]
+                           }
+                         }, {
+                           "name": "source",
+                           "type": {
+                             "name": "Source",
+                             "type": "enum",
+                             "symbols": ["GolfGalaxy", "FieldAndStream", "DicksSportingGoods","DonorsChoose","Stackd", "BBAIT"]
+                           }
+                         }, {
+                           "name": "channel",
+                           "type": {
+                             "name": "Channel",
+                             "type": "enum",
+                             "symbols": ["Desktop", "Mobile", "AOS", "CallCenter", "Native", "Tablet", "PhysicalStore", "SecondSkin", "Stackd"]
+                           }
+                         }, {
+                           "name": "orderType",
+                           "type": {
+                             "name": "OrderType",
+                             "type": "enum",
+                             "symbols": ["ReshipNoReturn", "ReshipReturnRequired", "None", "BOPIS"]
+                           }
+                         },{
+                           "name": "timePlaced",
+                           "type": "string"
+                         }, {
+                           "name": "lastUpdated",
+                           "type": "string"
+                         }, {
+                           "name": "identityId",
+                           "type": ["null", "string"], "default": null
+                         }, {
+                           "name": "authId",
+                           "type": ["null", "string"], "default": null
+                         },
+                          {
+                           "name": "customerDetails",
+                           "type": {
+                             "name": "Person",
+                             "type": "record",
+                             "fields": [
+                             /*{"name": "firstName", "type": "string"},
+                             {"name": "lastName", "type": "string"},
+                             {"name": "phone", "type": "string"},
+                             {"name": "email", "type": ["null", "string"], "default": null},*/
+                             {"name": "loyaltyAccount", "type": ["null", "string"], "default": null},
+                             {"name": "address", "type": {
+                               "name": "Address",
+                               "type": "record", "fields": [
+                               {"name": "address1", "type": "string"},
+                               {"name": "address2", "type": ["null", "string"], "default": null},
+                               {"name": "address3", "type": ["null", "string"], "default": null},
+                               {"name": "city", "type": "string"},
+                               {"name": "state", "type": "string"},
+                               {"name": "postalCode", "type": "string"},
+                               {"name": "country", "type": "string"}
+                               ]}
+                             }
+                             ]
+                           }}, {
+                           "name": "payments",
+                           "type": {
+                             "type": "array",
+                             "items": {
+                               "name": "Payment",
+                               "type": "record",
+                               "fields": [
+                               {"name": "paymentType", "type": {
+                                 "name": "PaymentType",
+                                 "type": "enum",
+                                 "symbols": ["ValueLink", "Mastercard", "Visa", "Discover", "AmericanExpress" ,"PLCC", "Resiliency",
+                                             "JCB", "COMC", "DinersClub", "PayPal", "None"
+                                 ]}
+                               }
+                               ]
+                             }
+                           }
+                         }, {
+                           "name": "rewardCertificates",
+                           "type": ["null", "string"], "default": null
+                         }, {"name": "cancelDetails", "type": ["null", {
+    "name": "CancelDetails",
+    "type": "record",
+    "fields": [
+    {"name": "cancelSource", "type": {
+      "name": "CancelSource",
+      "type": "enum",
+      "symbols": ["CallCenter", "Web", "Fraud", "Other"
+      ]}
+    },
+    {"name": "agent", "type": ["null", "string"], "default": null},
+    {"name": "cancelDate", "type": ["null", "string"], "default": null},
+    {"name": "reason", "type": ["null", "string"], "default": null}
+    ]}],                     "default": null
+                         },{
+                           "name": "lineItems",
+                           "type": {
+                             "type": "array",
+                             "items": {
+                               "name": "LineItem",
+                               "type": "record",
+                               "fields": [
+                               {"name": "sku", "type": "string"},
+                               {"name": "externalItemIdentifier", "type": "string"},
+                               {"name": "lineNumber", "type": "string"},
+                               {"name": "sequence", "type": "int", "default": 0},
+                               {"name": "state", "type": {
+                                 "name": "LineItemState",
+                                 "type": "enum",
+                                 "symbols": ["in_process", "canceled", "fulfilled","placed","in_review","rejected","returned","ready_for_pickup"]
+                               }},
+                               {"name": "lastUpdated", "type": "string"},
+                               {"name": "originalPrice", "type": "string"},
+                               {"name": "discount", "type": "string"},
+                               {"name": "purchasePrice", "type": "string"},
+                               {"name": "estimatedUnitTax", "type": "string"},
+                               {"name": "upc", "type": "string"},
+                               {"name": "estimatedDeliveryDate", "type": ["null", "string"], "default": null},
+                               {"name": "guaranteedToGetThereDate", "type": ["null", "string"], "default": null},
+                               {"name": "lineItemType", "type": ["null", "string"], "default": null},
+                               {  "name": "lineItemProperties", "type": ["null", {
+                                 "type": "map",
+                                 "values": "string"
+                               }],"default": null
+                               },
+                               {"name": "attributes", "type": {
+                                 "type": "array",
+                                 "items": {
+                                   "type": "map",
+                                   "values": "string"
+                                 }
+                               }},
+                               {"name": "taxDetails",
+                                "type": {
+                                  "name": "TaxDetails",
+                                  "type": "record",
+                                  "fields": [
+                                  {"name": "taxProductCode", "type": ["null", "string"], "default": null},
+                                  {"name": "estimatedShipTax", "type": ["null", "string"], "default": null},
+                                  {"name": "actualShipTax", "type": ["null", "string"], "default": null},
+                                  {"name": "estimatedUnitTax", "type": ["null", "string"], "default": null},
+                                  {"name": "actualUnitTax", "type": ["null", "string"], "default": null},
+                                  {"name": "adminOriginId", "type": ["null", "string"], "default": null},
+                                  {"name": "physicalOriginId", "type": ["null", "string"], "default": null},
+                                  {"name": "adminDestinationId", "type": ["null", "string"], "default": null},
+                                  {"name": "destinationId", "type": ["null", "string"], "default": null}
+                                  ]}
+                               },
+                               {                        "name": "fulfillmentDetails",
+                                 "type": ["null", {
+                                   "name": "FulfillmentDetails",
+                                   "type": "record",
+                                   "fields": [
+                                   {"name": "fulfillmentType", "type": ["null", "string"], "default": null},
+                                   {"name": "purchaseOrder", "type": ["null", "string"], "default": null},
+                                   {                        "name": "fulfillmentLocation",
+                                     "type": ["null", {
+                                       "name": "FulfillmentLocation",
+                                       "type": "record",
+                                       "fields": [
+                                       {"name": "shipLocationId", "type": ["null", "string"], "default": null},
+                                       {"name": "fulfillmentLocationId", "type": ["null", "string"], "default": null},
+                                       {      "name": "fulfillmentAddress", "type": ["null", {
+                                         "name": "FulfillmentAddress",
+                                         "type": "record", "fields": [
+                                         {"name": "address1", "type": ["null", "string"], "default": null},
+                                         {"name": "address2", "type": ["null", "string"], "default": null},
+                                         {"name": "address3", "type": ["null", "string"], "default": null},
+                                         {"name": "city", "type": ["null", "string"], "default": null},
+                                         {"name": "state", "type": ["null", "string"], "default": null},
+                                         {"name": "postalCode", "type": ["null", "string"], "default": null},
+                                         {"name": "country", "type": ["null", "string"], "default": null}
+                                         ]}], "default": null
+                                       }
+                                       ]}],"default": null
+                                   },
+                                   {"name": "fulfillmentOrderId", "type": ["null", "string"], "default": null},
+                                   {"name": "timeShipped", "type": ["null", "string"], "default": null}
+                                   ]}],"default": null
+                               },
+                               {"name": "shippingDetails", "type": {
+                                 "name": "ShippingDetails",
+                                 "type":"record",
+                                 "fields": [
+                                 {"name": "sku", "type": ["null", "string"], "default": null},
+                                 {"name": "upc", "type": ["null", "string"], "default": null},
+                                 {"name": "shipMode", "type": {
+                                   "name": "ShipMode",
+                                   "type": "enum",
+                                   "symbols": ["Standard", "Expedited", "Express", "APO", "FPO", "PO_Box", "Curbside", "Threshold", "Room_of_Choice", "Delivery_Assembly", "Bopis"]
+                                 }},
+                                 {"name": "shipLocationId", "type": ["null", "string"], "default": null},
+                                 {"name": "carrier", "type": {
+                                   "name": "Carrier",
+                                   "type": "enum",
+                                   "symbols": ["UPS", "USPS", "FEDEX", "Other"]
+                                 }},
+                                 {"name": "finalShipMode", "type": ["null", "string"], "default": null},
+                                 {"name": "finalCarrier", "type": ["null", "string"], "default": null},
+                                 {"name": "classification", "type": ["null", "string"], "default": null},
+                                 {"name": "trackingId", "type": ["null", "string"], "default": null},
+                                 {"name": "originalShipCost", "type": "string"},
+                                 {"name": "discount", "type": "string"},
+                                 {"name": "purchaseShipCost", "type": "string"},
+                                 {"name": "shippingRecipient", "type": "Person"},
+                                 {"name": "shippingTaxDetails", "type": "TaxDetails"}
+                                 ]}
+                               },
+                               {                        "name": "returnDetails",
+                                 "type": ["null", {
+                                   "name": "ReturnDetails",
+                                   "type": "record",
+                                   "fields": [
+                                   {"name": "returnTrackingId", "type": ["null", "string"], "default": null}
+                                   ]}],"default": null
+                               }
+                               ]
+                             }
+                           }
+                         }]
+}

@@ -1,0 +1,15 @@
+Configuration:
+  name: Default
+  thresholdFilter:
+    level: debug
+  appenders:
+    Console:
+      name: STDOUT
+      JSONLayout:
+        compact: true
+        eventEol: true
+        properties: true
+  loggers:
+    root:
+      AppenderRef:
+        ref: STDOUT

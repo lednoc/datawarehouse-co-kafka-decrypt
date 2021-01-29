@@ -1,0 +1,79 @@
+server:
+  port: 3002
+spring:
+  kafka:
+    application:
+      id: co-ddw-format
+      name: customer-order-ddw-transformation
+    #output.topic: customerorder.order.eom
+    output.topic: ddw-co-poc1
+    input.topic: co-lifecycle
+    #input.topic: customerorder.order.lifecycle
+    bootstrap:
+      #servers: 10.233.99.160:9092
+      servers: ubtu-az-q-0888.dcsg.com:9093,ubtu-az-q-0889.dcsg.com:9093,ubtu-az-q-0890.dcsg.com:9093,ubtu-az-q-0891.dcsg.com:9093,ubtu-az-q-0892.dcsg.com:9093
+    serializer:
+      key: org.apache.kafka.common.serialization.StringSerializer
+      output.value: org.apache.kafka.common.serialization.StringSerializer
+      #input.value: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+    deserializer:
+      key: org.apache.kafka.common.serialization.StringDeserializer
+      value: org.apache.kafka.common.serialization.StringDeserializer 
+    schema:
+      registry:
+        url: https://kafkaschregaznp.dcsg.com:8082
+        #url: http://10.233.99.164:9094
+    auto:
+      offset:
+        reset: latest
+    consumer:            
+      group-id: ddw-order-consumer-spring  #orig used
+      #group-id: ddw-ecm-tst # used to try to read ddw-topic
+    listener:
+      ack-mode: BATCH ##; when the listener returns after handling the last message from the poll, the offset is committed.
+      
+    client-id: ddw-order-consumer-spring1 #orig
+    #client-id: ddw-order-consumer-spring2 #used to try to read ddw-topic
+
+    security: 
+      protocol: SSL
+      ssl:
+        enabled: 
+          protocols: TLSv1.2
+        keystore:
+          location: EBIRDataWarehousing.keystore.jks
+          password: 3EjSpMNvJ8S3AaHF
+        key:
+          password: 3EjSpMNvJ8S3AaHF
+        truststore:
+          location: kafka.truststore.jks
+          password: zCeWszAF0qlfcQJ0cTd9    
+
+
+##kc        
+  datasource:
+    url: jdbc:oracle:thin:@dkha3220:1521:ddwu
+    username: kcondel
+    password: Ken_Condel_2021
+    driver-class-name: oracle.jdbc.driver.OracleDriver  ##showed in debug
+    
+
+rsa:
+  privatekey: co-rsa-private-key-2048-dev.pem
+    
+management.endpoints.web.exposure.include: '*'
+management.metrics.tags.application: ${spring.application.name}
+management.metrics.distribution:
+  percentiles-histogram:
+    "[http.server.requests]": true
+  sla:
+    "[http.server.requests]": 10ms, 100ms
+  percentiles:
+    "[http.server.requests]": 0.5, 0.75, 0.95, 0.98, 0.99, 1.0
+
+logging:
+  config: classpath:log4j2.yml
+  level:
+    org.springframework: ERROR
+    

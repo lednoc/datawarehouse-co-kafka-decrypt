@@ -1,0 +1,12 @@
+encrypt:
+  key: customerorder
+spring:
+  application:
+    name: customer-order-to-eom-transformation
+  profiles:
+    active: local
+  cloud:
+    config:
+      uri: https://customer-order-config.apps.vn01.pcf.dcsg.com
+      username: customer-order
+      password: '{cipher}9884779a19cf6bfd4f1d738002289a09e340bee55089b512aad481fa2f17b978'
