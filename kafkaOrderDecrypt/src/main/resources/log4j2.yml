@@ -1,7 +1,19 @@
 Configuration:
   name: Default
+  
+  Properties:
+    Property:
+      -
+        name: "logDir"
+        value: "log"   
+      -
+        name: "archive"
+        value: ${logDir}/archive
+          
   thresholdFilter:
     level: debug
+    
+  
   
   appenders:
     Console:
@@ -12,17 +24,27 @@ Configuration:
         
     File:
       name: FILE
-      fileName: logfile.log
+      fileName: ${logDir}/logfile.log
       PatternLayout:
         pattern: "%d{HH:mm:ss.SSS} [%t] %highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} - %msg%n"
+        
+    RollingFile:
+      - name: RollingFile_Appender
+        fileName: ${logDir}/rollingfile.log
+        filePattern: ${archive}/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz
+        PatternLayout:
+          pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 1 KB
+        DefaultRollOverStrategy:
+          max: 30        
         
   loggers:
     root:
       AppenderRef:
        - ref: STDOUT
- #      - ref: FILE
 
- 
  
     Logger:   
        -
@@ -31,6 +53,8 @@ Configuration:
         AppenderRef:
          - ref: FILE
            level: error
+         - ref: RollingFile_Appender
+           level: debug           
 
 
       
