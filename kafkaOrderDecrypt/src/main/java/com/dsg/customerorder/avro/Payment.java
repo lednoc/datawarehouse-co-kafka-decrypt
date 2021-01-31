@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Payment extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -8714106789568211224L;
@@ -26,7 +27,16 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       new BinaryMessageDecoder<Payment>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Payment> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Payment> getDecoder() {
     return DECODER;
@@ -35,23 +45,33 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Payment> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Payment>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Payment to a ByteBuffer. */
+  /**
+   * Serializes this Payment to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Payment from a ByteBuffer. */
+  /**
+   * Deserializes a Payment from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Payment instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Payment fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.dsg.customerorder.avro.PaymentType paymentType;
+   private com.dsg.customerorder.avro.PaymentType paymentType;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -68,12 +88,13 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     this.paymentType = paymentType;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return paymentType;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -82,7 +103,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: paymentType = (com.dsg.customerorder.avro.PaymentType)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -93,6 +114,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
   public com.dsg.customerorder.avro.PaymentType getPaymentType() {
     return paymentType;
   }
+
 
   /**
    * Sets the value of the 'paymentType' field.
@@ -116,7 +138,11 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Payment RecordBuilder
    */
   public static com.dsg.customerorder.avro.Payment.Builder newBuilder(com.dsg.customerorder.avro.Payment.Builder other) {
-    return new com.dsg.customerorder.avro.Payment.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Payment.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Payment.Builder(other);
+    }
   }
 
   /**
@@ -125,12 +151,17 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Payment RecordBuilder
    */
   public static com.dsg.customerorder.avro.Payment.Builder newBuilder(com.dsg.customerorder.avro.Payment other) {
-    return new com.dsg.customerorder.avro.Payment.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Payment.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Payment.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for Payment instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Payment>
     implements org.apache.avro.data.RecordBuilder<Payment> {
 
@@ -149,7 +180,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       super(other);
       if (isValidValue(fields()[0], other.paymentType)) {
         this.paymentType = data().deepCopy(fields()[0].schema(), other.paymentType);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
     }
 
@@ -158,7 +189,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.Payment other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.paymentType)) {
         this.paymentType = data().deepCopy(fields()[0].schema(), other.paymentType);
         fieldSetFlags()[0] = true;
@@ -172,6 +203,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     public com.dsg.customerorder.avro.PaymentType getPaymentType() {
       return paymentType;
     }
+
 
     /**
       * Sets the value of the 'paymentType' field.
@@ -211,6 +243,8 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
         Payment record = new Payment();
         record.paymentType = fieldSetFlags()[0] ? this.paymentType : (com.dsg.customerorder.avro.PaymentType) defaultValue(fields()[0]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -235,4 +269,43 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeEnum(this.paymentType.ordinal());
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.paymentType = com.dsg.customerorder.avro.PaymentType.values()[in.readEnum()];
+
+    } else {
+      for (int i = 0; i < 1; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.paymentType = com.dsg.customerorder.avro.PaymentType.values()[in.readEnum()];
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

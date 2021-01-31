@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -4785467182333249201L;
@@ -26,7 +27,16 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
       new BinaryMessageDecoder<CancelDetails>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<CancelDetails> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<CancelDetails> getDecoder() {
     return DECODER;
@@ -35,26 +45,36 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<CancelDetails> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<CancelDetails>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this CancelDetails to a ByteBuffer. */
+  /**
+   * Serializes this CancelDetails to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a CancelDetails from a ByteBuffer. */
+  /**
+   * Deserializes a CancelDetails from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a CancelDetails instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static CancelDetails fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.dsg.customerorder.avro.CancelSource cancelSource;
-  @Deprecated public java.lang.CharSequence agent;
-  @Deprecated public java.lang.CharSequence cancelDate;
-  @Deprecated public java.lang.CharSequence reason;
+   private com.dsg.customerorder.avro.CancelSource cancelSource;
+   private java.lang.CharSequence agent;
+   private java.lang.CharSequence cancelDate;
+   private java.lang.CharSequence reason;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -77,6 +97,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     this.reason = reason;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -85,7 +106,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     case 1: return agent;
     case 2: return cancelDate;
     case 3: return reason;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -97,7 +118,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     case 1: agent = (java.lang.CharSequence)value$; break;
     case 2: cancelDate = (java.lang.CharSequence)value$; break;
     case 3: reason = (java.lang.CharSequence)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -108,6 +129,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
   public com.dsg.customerorder.avro.CancelSource getCancelSource() {
     return cancelSource;
   }
+
 
   /**
    * Sets the value of the 'cancelSource' field.
@@ -125,6 +147,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     return agent;
   }
 
+
   /**
    * Sets the value of the 'agent' field.
    * @param value the value to set.
@@ -141,6 +164,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     return cancelDate;
   }
 
+
   /**
    * Sets the value of the 'cancelDate' field.
    * @param value the value to set.
@@ -156,6 +180,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
   public java.lang.CharSequence getReason() {
     return reason;
   }
+
 
   /**
    * Sets the value of the 'reason' field.
@@ -179,7 +204,11 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new CancelDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.CancelDetails.Builder newBuilder(com.dsg.customerorder.avro.CancelDetails.Builder other) {
-    return new com.dsg.customerorder.avro.CancelDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.CancelDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.CancelDetails.Builder(other);
+    }
   }
 
   /**
@@ -188,12 +217,17 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new CancelDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.CancelDetails.Builder newBuilder(com.dsg.customerorder.avro.CancelDetails other) {
-    return new com.dsg.customerorder.avro.CancelDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.CancelDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.CancelDetails.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for CancelDetails instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<CancelDetails>
     implements org.apache.avro.data.RecordBuilder<CancelDetails> {
 
@@ -215,19 +249,19 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
       super(other);
       if (isValidValue(fields()[0], other.cancelSource)) {
         this.cancelSource = data().deepCopy(fields()[0].schema(), other.cancelSource);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.agent)) {
         this.agent = data().deepCopy(fields()[1].schema(), other.agent);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.cancelDate)) {
         this.cancelDate = data().deepCopy(fields()[2].schema(), other.cancelDate);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.reason)) {
         this.reason = data().deepCopy(fields()[3].schema(), other.reason);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
     }
 
@@ -236,7 +270,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.CancelDetails other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.cancelSource)) {
         this.cancelSource = data().deepCopy(fields()[0].schema(), other.cancelSource);
         fieldSetFlags()[0] = true;
@@ -262,6 +296,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     public com.dsg.customerorder.avro.CancelSource getCancelSource() {
       return cancelSource;
     }
+
 
     /**
       * Sets the value of the 'cancelSource' field.
@@ -302,6 +337,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
       return agent;
     }
 
+
     /**
       * Sets the value of the 'agent' field.
       * @param value The value of 'agent'.
@@ -341,6 +377,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
       return cancelDate;
     }
 
+
     /**
       * Sets the value of the 'cancelDate' field.
       * @param value The value of 'cancelDate'.
@@ -379,6 +416,7 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     public java.lang.CharSequence getReason() {
       return reason;
     }
+
 
     /**
       * Sets the value of the 'reason' field.
@@ -421,6 +459,8 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
         record.cancelDate = fieldSetFlags()[2] ? this.cancelDate : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.reason = fieldSetFlags()[3] ? this.reason : (java.lang.CharSequence) defaultValue(fields()[3]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -445,4 +485,115 @@ public class CancelDetails extends org.apache.avro.specific.SpecificRecordBase i
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeEnum(this.cancelSource.ordinal());
+
+    if (this.agent == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.agent);
+    }
+
+    if (this.cancelDate == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.cancelDate);
+    }
+
+    if (this.reason == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.reason);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.cancelSource = com.dsg.customerorder.avro.CancelSource.values()[in.readEnum()];
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.agent = null;
+      } else {
+        this.agent = in.readString(this.agent instanceof Utf8 ? (Utf8)this.agent : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.cancelDate = null;
+      } else {
+        this.cancelDate = in.readString(this.cancelDate instanceof Utf8 ? (Utf8)this.cancelDate : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.reason = null;
+      } else {
+        this.reason = in.readString(this.reason instanceof Utf8 ? (Utf8)this.reason : null);
+      }
+
+    } else {
+      for (int i = 0; i < 4; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.cancelSource = com.dsg.customerorder.avro.CancelSource.values()[in.readEnum()];
+          break;
+
+        case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.agent = null;
+          } else {
+            this.agent = in.readString(this.agent instanceof Utf8 ? (Utf8)this.agent : null);
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.cancelDate = null;
+          } else {
+            this.cancelDate = in.readString(this.cancelDate instanceof Utf8 ? (Utf8)this.cancelDate : null);
+          }
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.reason = null;
+          } else {
+            this.reason = in.readString(this.reason instanceof Utf8 ? (Utf8)this.reason : null);
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

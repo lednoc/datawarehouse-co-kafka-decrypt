@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class LineItem extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -7216723209400749297L;
@@ -26,7 +27,16 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       new BinaryMessageDecoder<LineItem>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<LineItem> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<LineItem> getDecoder() {
     return DECODER;
@@ -35,42 +45,52 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<LineItem> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<LineItem>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this LineItem to a ByteBuffer. */
+  /**
+   * Serializes this LineItem to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a LineItem from a ByteBuffer. */
+  /**
+   * Deserializes a LineItem from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a LineItem instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static LineItem fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence sku;
-  @Deprecated public java.lang.CharSequence externalItemIdentifier;
-  @Deprecated public java.lang.CharSequence lineNumber;
-  @Deprecated public int sequence;
-  @Deprecated public com.dsg.customerorder.avro.LineItemState state;
-  @Deprecated public java.lang.CharSequence lastUpdated;
-  @Deprecated public java.lang.CharSequence originalPrice;
-  @Deprecated public java.lang.CharSequence discount;
-  @Deprecated public java.lang.CharSequence purchasePrice;
-  @Deprecated public java.lang.CharSequence estimatedUnitTax;
-  @Deprecated public java.lang.CharSequence upc;
-  @Deprecated public java.lang.CharSequence estimatedDeliveryDate;
-  @Deprecated public java.lang.CharSequence guaranteedToGetThereDate;
-  @Deprecated public java.lang.CharSequence lineItemType;
-  @Deprecated public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> lineItemProperties;
-  @Deprecated public java.util.List<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> attributes;
-  @Deprecated public com.dsg.customerorder.avro.TaxDetails taxDetails;
-  @Deprecated public com.dsg.customerorder.avro.FulfillmentDetails fulfillmentDetails;
-  @Deprecated public com.dsg.customerorder.avro.ShippingDetails shippingDetails;
-  @Deprecated public com.dsg.customerorder.avro.ReturnDetails returnDetails;
+   private java.lang.CharSequence sku;
+   private java.lang.CharSequence externalItemIdentifier;
+   private java.lang.CharSequence lineNumber;
+   private int sequence;
+   private com.dsg.customerorder.avro.LineItemState state;
+   private java.lang.CharSequence lastUpdated;
+   private java.lang.CharSequence originalPrice;
+   private java.lang.CharSequence discount;
+   private java.lang.CharSequence purchasePrice;
+   private java.lang.CharSequence estimatedUnitTax;
+   private java.lang.CharSequence upc;
+   private java.lang.CharSequence estimatedDeliveryDate;
+   private java.lang.CharSequence guaranteedToGetThereDate;
+   private java.lang.CharSequence lineItemType;
+   private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> lineItemProperties;
+   private java.util.List<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> attributes;
+   private com.dsg.customerorder.avro.TaxDetails taxDetails;
+   private com.dsg.customerorder.avro.FulfillmentDetails fulfillmentDetails;
+   private com.dsg.customerorder.avro.ShippingDetails shippingDetails;
+   private com.dsg.customerorder.avro.ReturnDetails returnDetails;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -125,6 +145,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     this.returnDetails = returnDetails;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -149,7 +170,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     case 17: return fulfillmentDetails;
     case 18: return shippingDetails;
     case 19: return returnDetails;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -177,7 +198,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     case 17: fulfillmentDetails = (com.dsg.customerorder.avro.FulfillmentDetails)value$; break;
     case 18: shippingDetails = (com.dsg.customerorder.avro.ShippingDetails)value$; break;
     case 19: returnDetails = (com.dsg.customerorder.avro.ReturnDetails)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -188,6 +209,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.CharSequence getSku() {
     return sku;
   }
+
 
   /**
    * Sets the value of the 'sku' field.
@@ -205,6 +227,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return externalItemIdentifier;
   }
 
+
   /**
    * Sets the value of the 'externalItemIdentifier' field.
    * @param value the value to set.
@@ -221,6 +244,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return lineNumber;
   }
 
+
   /**
    * Sets the value of the 'lineNumber' field.
    * @param value the value to set.
@@ -233,15 +257,16 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'sequence' field.
    * @return The value of the 'sequence' field.
    */
-  public java.lang.Integer getSequence() {
+  public int getSequence() {
     return sequence;
   }
+
 
   /**
    * Sets the value of the 'sequence' field.
    * @param value the value to set.
    */
-  public void setSequence(java.lang.Integer value) {
+  public void setSequence(int value) {
     this.sequence = value;
   }
 
@@ -252,6 +277,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public com.dsg.customerorder.avro.LineItemState getState() {
     return state;
   }
+
 
   /**
    * Sets the value of the 'state' field.
@@ -269,6 +295,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return lastUpdated;
   }
 
+
   /**
    * Sets the value of the 'lastUpdated' field.
    * @param value the value to set.
@@ -284,6 +311,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.CharSequence getOriginalPrice() {
     return originalPrice;
   }
+
 
   /**
    * Sets the value of the 'originalPrice' field.
@@ -301,6 +329,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return discount;
   }
 
+
   /**
    * Sets the value of the 'discount' field.
    * @param value the value to set.
@@ -316,6 +345,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.CharSequence getPurchasePrice() {
     return purchasePrice;
   }
+
 
   /**
    * Sets the value of the 'purchasePrice' field.
@@ -333,6 +363,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return estimatedUnitTax;
   }
 
+
   /**
    * Sets the value of the 'estimatedUnitTax' field.
    * @param value the value to set.
@@ -348,6 +379,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.CharSequence getUpc() {
     return upc;
   }
+
 
   /**
    * Sets the value of the 'upc' field.
@@ -365,6 +397,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return estimatedDeliveryDate;
   }
 
+
   /**
    * Sets the value of the 'estimatedDeliveryDate' field.
    * @param value the value to set.
@@ -380,6 +413,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.CharSequence getGuaranteedToGetThereDate() {
     return guaranteedToGetThereDate;
   }
+
 
   /**
    * Sets the value of the 'guaranteedToGetThereDate' field.
@@ -397,6 +431,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return lineItemType;
   }
 
+
   /**
    * Sets the value of the 'lineItemType' field.
    * @param value the value to set.
@@ -412,6 +447,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getLineItemProperties() {
     return lineItemProperties;
   }
+
 
   /**
    * Sets the value of the 'lineItemProperties' field.
@@ -429,6 +465,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return attributes;
   }
 
+
   /**
    * Sets the value of the 'attributes' field.
    * @param value the value to set.
@@ -444,6 +481,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public com.dsg.customerorder.avro.TaxDetails getTaxDetails() {
     return taxDetails;
   }
+
 
   /**
    * Sets the value of the 'taxDetails' field.
@@ -461,6 +499,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return fulfillmentDetails;
   }
 
+
   /**
    * Sets the value of the 'fulfillmentDetails' field.
    * @param value the value to set.
@@ -477,6 +516,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     return shippingDetails;
   }
 
+
   /**
    * Sets the value of the 'shippingDetails' field.
    * @param value the value to set.
@@ -492,6 +532,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
   public com.dsg.customerorder.avro.ReturnDetails getReturnDetails() {
     return returnDetails;
   }
+
 
   /**
    * Sets the value of the 'returnDetails' field.
@@ -515,7 +556,11 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new LineItem RecordBuilder
    */
   public static com.dsg.customerorder.avro.LineItem.Builder newBuilder(com.dsg.customerorder.avro.LineItem.Builder other) {
-    return new com.dsg.customerorder.avro.LineItem.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.LineItem.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.LineItem.Builder(other);
+    }
   }
 
   /**
@@ -524,12 +569,17 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new LineItem RecordBuilder
    */
   public static com.dsg.customerorder.avro.LineItem.Builder newBuilder(com.dsg.customerorder.avro.LineItem other) {
-    return new com.dsg.customerorder.avro.LineItem.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.LineItem.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.LineItem.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for LineItem instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<LineItem>
     implements org.apache.avro.data.RecordBuilder<LineItem> {
 
@@ -571,92 +621,92 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       super(other);
       if (isValidValue(fields()[0], other.sku)) {
         this.sku = data().deepCopy(fields()[0].schema(), other.sku);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.externalItemIdentifier)) {
         this.externalItemIdentifier = data().deepCopy(fields()[1].schema(), other.externalItemIdentifier);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.lineNumber)) {
         this.lineNumber = data().deepCopy(fields()[2].schema(), other.lineNumber);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.sequence)) {
         this.sequence = data().deepCopy(fields()[3].schema(), other.sequence);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.state)) {
         this.state = data().deepCopy(fields()[4].schema(), other.state);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.lastUpdated)) {
         this.lastUpdated = data().deepCopy(fields()[5].schema(), other.lastUpdated);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.originalPrice)) {
         this.originalPrice = data().deepCopy(fields()[6].schema(), other.originalPrice);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.discount)) {
         this.discount = data().deepCopy(fields()[7].schema(), other.discount);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.purchasePrice)) {
         this.purchasePrice = data().deepCopy(fields()[8].schema(), other.purchasePrice);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
       if (isValidValue(fields()[9], other.estimatedUnitTax)) {
         this.estimatedUnitTax = data().deepCopy(fields()[9].schema(), other.estimatedUnitTax);
-        fieldSetFlags()[9] = true;
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
       if (isValidValue(fields()[10], other.upc)) {
         this.upc = data().deepCopy(fields()[10].schema(), other.upc);
-        fieldSetFlags()[10] = true;
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
       if (isValidValue(fields()[11], other.estimatedDeliveryDate)) {
         this.estimatedDeliveryDate = data().deepCopy(fields()[11].schema(), other.estimatedDeliveryDate);
-        fieldSetFlags()[11] = true;
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
       if (isValidValue(fields()[12], other.guaranteedToGetThereDate)) {
         this.guaranteedToGetThereDate = data().deepCopy(fields()[12].schema(), other.guaranteedToGetThereDate);
-        fieldSetFlags()[12] = true;
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
       if (isValidValue(fields()[13], other.lineItemType)) {
         this.lineItemType = data().deepCopy(fields()[13].schema(), other.lineItemType);
-        fieldSetFlags()[13] = true;
+        fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
       if (isValidValue(fields()[14], other.lineItemProperties)) {
         this.lineItemProperties = data().deepCopy(fields()[14].schema(), other.lineItemProperties);
-        fieldSetFlags()[14] = true;
+        fieldSetFlags()[14] = other.fieldSetFlags()[14];
       }
       if (isValidValue(fields()[15], other.attributes)) {
         this.attributes = data().deepCopy(fields()[15].schema(), other.attributes);
-        fieldSetFlags()[15] = true;
+        fieldSetFlags()[15] = other.fieldSetFlags()[15];
       }
       if (isValidValue(fields()[16], other.taxDetails)) {
         this.taxDetails = data().deepCopy(fields()[16].schema(), other.taxDetails);
-        fieldSetFlags()[16] = true;
+        fieldSetFlags()[16] = other.fieldSetFlags()[16];
       }
       if (other.hasTaxDetailsBuilder()) {
         this.taxDetailsBuilder = com.dsg.customerorder.avro.TaxDetails.newBuilder(other.getTaxDetailsBuilder());
       }
       if (isValidValue(fields()[17], other.fulfillmentDetails)) {
         this.fulfillmentDetails = data().deepCopy(fields()[17].schema(), other.fulfillmentDetails);
-        fieldSetFlags()[17] = true;
+        fieldSetFlags()[17] = other.fieldSetFlags()[17];
       }
       if (other.hasFulfillmentDetailsBuilder()) {
         this.fulfillmentDetailsBuilder = com.dsg.customerorder.avro.FulfillmentDetails.newBuilder(other.getFulfillmentDetailsBuilder());
       }
       if (isValidValue(fields()[18], other.shippingDetails)) {
         this.shippingDetails = data().deepCopy(fields()[18].schema(), other.shippingDetails);
-        fieldSetFlags()[18] = true;
+        fieldSetFlags()[18] = other.fieldSetFlags()[18];
       }
       if (other.hasShippingDetailsBuilder()) {
         this.shippingDetailsBuilder = com.dsg.customerorder.avro.ShippingDetails.newBuilder(other.getShippingDetailsBuilder());
       }
       if (isValidValue(fields()[19], other.returnDetails)) {
         this.returnDetails = data().deepCopy(fields()[19].schema(), other.returnDetails);
-        fieldSetFlags()[19] = true;
+        fieldSetFlags()[19] = other.fieldSetFlags()[19];
       }
       if (other.hasReturnDetailsBuilder()) {
         this.returnDetailsBuilder = com.dsg.customerorder.avro.ReturnDetails.newBuilder(other.getReturnDetailsBuilder());
@@ -668,7 +718,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.LineItem other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.sku)) {
         this.sku = data().deepCopy(fields()[0].schema(), other.sku);
         fieldSetFlags()[0] = true;
@@ -763,6 +813,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return sku;
     }
 
+
     /**
       * Sets the value of the 'sku' field.
       * @param value The value of 'sku'.
@@ -801,6 +852,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.CharSequence getExternalItemIdentifier() {
       return externalItemIdentifier;
     }
+
 
     /**
       * Sets the value of the 'externalItemIdentifier' field.
@@ -841,6 +893,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return lineNumber;
     }
 
+
     /**
       * Sets the value of the 'lineNumber' field.
       * @param value The value of 'lineNumber'.
@@ -876,9 +929,10 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       * Gets the value of the 'sequence' field.
       * @return The value.
       */
-    public java.lang.Integer getSequence() {
+    public int getSequence() {
       return sequence;
     }
+
 
     /**
       * Sets the value of the 'sequence' field.
@@ -917,6 +971,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public com.dsg.customerorder.avro.LineItemState getState() {
       return state;
     }
+
 
     /**
       * Sets the value of the 'state' field.
@@ -957,6 +1012,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return lastUpdated;
     }
 
+
     /**
       * Sets the value of the 'lastUpdated' field.
       * @param value The value of 'lastUpdated'.
@@ -995,6 +1051,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.CharSequence getOriginalPrice() {
       return originalPrice;
     }
+
 
     /**
       * Sets the value of the 'originalPrice' field.
@@ -1035,6 +1092,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return discount;
     }
 
+
     /**
       * Sets the value of the 'discount' field.
       * @param value The value of 'discount'.
@@ -1073,6 +1131,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.CharSequence getPurchasePrice() {
       return purchasePrice;
     }
+
 
     /**
       * Sets the value of the 'purchasePrice' field.
@@ -1113,6 +1172,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return estimatedUnitTax;
     }
 
+
     /**
       * Sets the value of the 'estimatedUnitTax' field.
       * @param value The value of 'estimatedUnitTax'.
@@ -1151,6 +1211,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.CharSequence getUpc() {
       return upc;
     }
+
 
     /**
       * Sets the value of the 'upc' field.
@@ -1191,6 +1252,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return estimatedDeliveryDate;
     }
 
+
     /**
       * Sets the value of the 'estimatedDeliveryDate' field.
       * @param value The value of 'estimatedDeliveryDate'.
@@ -1229,6 +1291,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.CharSequence getGuaranteedToGetThereDate() {
       return guaranteedToGetThereDate;
     }
+
 
     /**
       * Sets the value of the 'guaranteedToGetThereDate' field.
@@ -1269,6 +1332,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return lineItemType;
     }
 
+
     /**
       * Sets the value of the 'lineItemType' field.
       * @param value The value of 'lineItemType'.
@@ -1307,6 +1371,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getLineItemProperties() {
       return lineItemProperties;
     }
+
 
     /**
       * Sets the value of the 'lineItemProperties' field.
@@ -1347,6 +1412,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
       return attributes;
     }
 
+
     /**
       * Sets the value of the 'attributes' field.
       * @param value The value of 'attributes'.
@@ -1385,6 +1451,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public com.dsg.customerorder.avro.TaxDetails getTaxDetails() {
       return taxDetails;
     }
+
 
     /**
       * Sets the value of the 'taxDetails' field.
@@ -1427,6 +1494,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.LineItem.Builder setTaxDetailsBuilder(com.dsg.customerorder.avro.TaxDetails.Builder value) {
       clearTaxDetails();
       taxDetailsBuilder = value;
@@ -1459,6 +1527,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public com.dsg.customerorder.avro.FulfillmentDetails getFulfillmentDetails() {
       return fulfillmentDetails;
     }
+
 
     /**
       * Sets the value of the 'fulfillmentDetails' field.
@@ -1501,6 +1570,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.LineItem.Builder setFulfillmentDetailsBuilder(com.dsg.customerorder.avro.FulfillmentDetails.Builder value) {
       clearFulfillmentDetails();
       fulfillmentDetailsBuilder = value;
@@ -1533,6 +1603,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public com.dsg.customerorder.avro.ShippingDetails getShippingDetails() {
       return shippingDetails;
     }
+
 
     /**
       * Sets the value of the 'shippingDetails' field.
@@ -1575,6 +1646,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.LineItem.Builder setShippingDetailsBuilder(com.dsg.customerorder.avro.ShippingDetails.Builder value) {
       clearShippingDetails();
       shippingDetailsBuilder = value;
@@ -1607,6 +1679,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     public com.dsg.customerorder.avro.ReturnDetails getReturnDetails() {
       return returnDetails;
     }
+
 
     /**
       * Sets the value of the 'returnDetails' field.
@@ -1649,6 +1722,7 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.LineItem.Builder setReturnDetailsBuilder(com.dsg.customerorder.avro.ReturnDetails.Builder value) {
       clearReturnDetails();
       returnDetailsBuilder = value;
@@ -1696,26 +1770,48 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
         record.lineItemProperties = fieldSetFlags()[14] ? this.lineItemProperties : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[14]);
         record.attributes = fieldSetFlags()[15] ? this.attributes : (java.util.List<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>>) defaultValue(fields()[15]);
         if (taxDetailsBuilder != null) {
-          record.taxDetails = this.taxDetailsBuilder.build();
+          try {
+            record.taxDetails = this.taxDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("taxDetails"));
+            throw e;
+          }
         } else {
           record.taxDetails = fieldSetFlags()[16] ? this.taxDetails : (com.dsg.customerorder.avro.TaxDetails) defaultValue(fields()[16]);
         }
         if (fulfillmentDetailsBuilder != null) {
-          record.fulfillmentDetails = this.fulfillmentDetailsBuilder.build();
+          try {
+            record.fulfillmentDetails = this.fulfillmentDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("fulfillmentDetails"));
+            throw e;
+          }
         } else {
           record.fulfillmentDetails = fieldSetFlags()[17] ? this.fulfillmentDetails : (com.dsg.customerorder.avro.FulfillmentDetails) defaultValue(fields()[17]);
         }
         if (shippingDetailsBuilder != null) {
-          record.shippingDetails = this.shippingDetailsBuilder.build();
+          try {
+            record.shippingDetails = this.shippingDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("shippingDetails"));
+            throw e;
+          }
         } else {
           record.shippingDetails = fieldSetFlags()[18] ? this.shippingDetails : (com.dsg.customerorder.avro.ShippingDetails) defaultValue(fields()[18]);
         }
         if (returnDetailsBuilder != null) {
-          record.returnDetails = this.returnDetailsBuilder.build();
+          try {
+            record.returnDetails = this.returnDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("returnDetails"));
+            throw e;
+          }
         } else {
           record.returnDetails = fieldSetFlags()[19] ? this.returnDetails : (com.dsg.customerorder.avro.ReturnDetails) defaultValue(fields()[19]);
         }
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -1740,4 +1836,434 @@ public class LineItem extends org.apache.avro.specific.SpecificRecordBase implem
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.sku);
+
+    out.writeString(this.externalItemIdentifier);
+
+    out.writeString(this.lineNumber);
+
+    out.writeInt(this.sequence);
+
+    out.writeEnum(this.state.ordinal());
+
+    out.writeString(this.lastUpdated);
+
+    out.writeString(this.originalPrice);
+
+    out.writeString(this.discount);
+
+    out.writeString(this.purchasePrice);
+
+    out.writeString(this.estimatedUnitTax);
+
+    out.writeString(this.upc);
+
+    if (this.estimatedDeliveryDate == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.estimatedDeliveryDate);
+    }
+
+    if (this.guaranteedToGetThereDate == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.guaranteedToGetThereDate);
+    }
+
+    if (this.lineItemType == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.lineItemType);
+    }
+
+    if (this.lineItemProperties == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      long size0 = this.lineItemProperties.size();
+      out.writeMapStart();
+      out.setItemCount(size0);
+      long actualSize0 = 0;
+      for (java.util.Map.Entry<java.lang.CharSequence, java.lang.CharSequence> e0: this.lineItemProperties.entrySet()) {
+        actualSize0++;
+        out.startItem();
+        out.writeString(e0.getKey());
+        java.lang.CharSequence v0 = e0.getValue();
+        out.writeString(v0);
+      }
+      out.writeMapEnd();
+      if (actualSize0 != size0)
+      throw new java.util.ConcurrentModificationException("Map-size written was " + size0 + ", but element count was " + actualSize0 + ".");
+    }
+
+    long size1 = this.attributes.size();
+    out.writeArrayStart();
+    out.setItemCount(size1);
+    long actualSize1 = 0;
+    for (java.util.Map<java.lang.CharSequence,java.lang.CharSequence> e1: this.attributes) {
+      actualSize1++;
+      out.startItem();
+      long size2 = e1.size();
+      out.writeMapStart();
+      out.setItemCount(size2);
+      long actualSize2 = 0;
+      for (java.util.Map.Entry<java.lang.CharSequence, java.lang.CharSequence> e2: e1.entrySet()) {
+        actualSize2++;
+        out.startItem();
+        out.writeString(e2.getKey());
+        java.lang.CharSequence v2 = e2.getValue();
+        out.writeString(v2);
+      }
+      out.writeMapEnd();
+      if (actualSize2 != size2)
+      throw new java.util.ConcurrentModificationException("Map-size written was " + size2 + ", but element count was " + actualSize2 + ".");
+    }
+    out.writeArrayEnd();
+    if (actualSize1 != size1)
+      throw new java.util.ConcurrentModificationException("Array-size written was " + size1 + ", but element count was " + actualSize1 + ".");
+
+    this.taxDetails.customEncode(out);
+
+    if (this.fulfillmentDetails == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      this.fulfillmentDetails.customEncode(out);
+    }
+
+    this.shippingDetails.customEncode(out);
+
+    if (this.returnDetails == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      this.returnDetails.customEncode(out);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.sku = in.readString(this.sku instanceof Utf8 ? (Utf8)this.sku : null);
+
+      this.externalItemIdentifier = in.readString(this.externalItemIdentifier instanceof Utf8 ? (Utf8)this.externalItemIdentifier : null);
+
+      this.lineNumber = in.readString(this.lineNumber instanceof Utf8 ? (Utf8)this.lineNumber : null);
+
+      this.sequence = in.readInt();
+
+      this.state = com.dsg.customerorder.avro.LineItemState.values()[in.readEnum()];
+
+      this.lastUpdated = in.readString(this.lastUpdated instanceof Utf8 ? (Utf8)this.lastUpdated : null);
+
+      this.originalPrice = in.readString(this.originalPrice instanceof Utf8 ? (Utf8)this.originalPrice : null);
+
+      this.discount = in.readString(this.discount instanceof Utf8 ? (Utf8)this.discount : null);
+
+      this.purchasePrice = in.readString(this.purchasePrice instanceof Utf8 ? (Utf8)this.purchasePrice : null);
+
+      this.estimatedUnitTax = in.readString(this.estimatedUnitTax instanceof Utf8 ? (Utf8)this.estimatedUnitTax : null);
+
+      this.upc = in.readString(this.upc instanceof Utf8 ? (Utf8)this.upc : null);
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.estimatedDeliveryDate = null;
+      } else {
+        this.estimatedDeliveryDate = in.readString(this.estimatedDeliveryDate instanceof Utf8 ? (Utf8)this.estimatedDeliveryDate : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.guaranteedToGetThereDate = null;
+      } else {
+        this.guaranteedToGetThereDate = in.readString(this.guaranteedToGetThereDate instanceof Utf8 ? (Utf8)this.guaranteedToGetThereDate : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.lineItemType = null;
+      } else {
+        this.lineItemType = in.readString(this.lineItemType instanceof Utf8 ? (Utf8)this.lineItemType : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.lineItemProperties = null;
+      } else {
+        long size0 = in.readMapStart();
+        java.util.Map<java.lang.CharSequence,java.lang.CharSequence> m0 = this.lineItemProperties; // Need fresh name due to limitation of macro system
+        if (m0 == null) {
+          m0 = new java.util.HashMap<java.lang.CharSequence,java.lang.CharSequence>((int)size0);
+          this.lineItemProperties = m0;
+        } else m0.clear();
+        for ( ; 0 < size0; size0 = in.mapNext()) {
+          for ( ; size0 != 0; size0--) {
+            java.lang.CharSequence k0 = null;
+            k0 = in.readString(k0 instanceof Utf8 ? (Utf8)k0 : null);
+            java.lang.CharSequence v0 = null;
+            v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+            m0.put(k0, v0);
+          }
+        }
+      }
+
+      long size1 = in.readArrayStart();
+      java.util.List<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> a1 = this.attributes;
+      if (a1 == null) {
+        a1 = new SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>>((int)size1, SCHEMA$.getField("attributes").schema());
+        this.attributes = a1;
+      } else a1.clear();
+      SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>>)a1 : null);
+      for ( ; 0 < size1; size1 = in.arrayNext()) {
+        for ( ; size1 != 0; size1--) {
+          java.util.Map<java.lang.CharSequence,java.lang.CharSequence> e1 = (ga1 != null ? ga1.peek() : null);
+          long size2 = in.readMapStart();
+          java.util.Map<java.lang.CharSequence,java.lang.CharSequence> m2 = e1; // Need fresh name due to limitation of macro system
+          if (m2 == null) {
+            m2 = new java.util.HashMap<java.lang.CharSequence,java.lang.CharSequence>((int)size2);
+            e1 = m2;
+          } else m2.clear();
+          for ( ; 0 < size2; size2 = in.mapNext()) {
+            for ( ; size2 != 0; size2--) {
+              java.lang.CharSequence k2 = null;
+              k2 = in.readString(k2 instanceof Utf8 ? (Utf8)k2 : null);
+              java.lang.CharSequence v2 = null;
+              v2 = in.readString(v2 instanceof Utf8 ? (Utf8)v2 : null);
+              m2.put(k2, v2);
+            }
+          }
+          a1.add(e1);
+        }
+      }
+
+      if (this.taxDetails == null) {
+        this.taxDetails = new com.dsg.customerorder.avro.TaxDetails();
+      }
+      this.taxDetails.customDecode(in);
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.fulfillmentDetails = null;
+      } else {
+        if (this.fulfillmentDetails == null) {
+          this.fulfillmentDetails = new com.dsg.customerorder.avro.FulfillmentDetails();
+        }
+        this.fulfillmentDetails.customDecode(in);
+      }
+
+      if (this.shippingDetails == null) {
+        this.shippingDetails = new com.dsg.customerorder.avro.ShippingDetails();
+      }
+      this.shippingDetails.customDecode(in);
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.returnDetails = null;
+      } else {
+        if (this.returnDetails == null) {
+          this.returnDetails = new com.dsg.customerorder.avro.ReturnDetails();
+        }
+        this.returnDetails.customDecode(in);
+      }
+
+    } else {
+      for (int i = 0; i < 20; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.sku = in.readString(this.sku instanceof Utf8 ? (Utf8)this.sku : null);
+          break;
+
+        case 1:
+          this.externalItemIdentifier = in.readString(this.externalItemIdentifier instanceof Utf8 ? (Utf8)this.externalItemIdentifier : null);
+          break;
+
+        case 2:
+          this.lineNumber = in.readString(this.lineNumber instanceof Utf8 ? (Utf8)this.lineNumber : null);
+          break;
+
+        case 3:
+          this.sequence = in.readInt();
+          break;
+
+        case 4:
+          this.state = com.dsg.customerorder.avro.LineItemState.values()[in.readEnum()];
+          break;
+
+        case 5:
+          this.lastUpdated = in.readString(this.lastUpdated instanceof Utf8 ? (Utf8)this.lastUpdated : null);
+          break;
+
+        case 6:
+          this.originalPrice = in.readString(this.originalPrice instanceof Utf8 ? (Utf8)this.originalPrice : null);
+          break;
+
+        case 7:
+          this.discount = in.readString(this.discount instanceof Utf8 ? (Utf8)this.discount : null);
+          break;
+
+        case 8:
+          this.purchasePrice = in.readString(this.purchasePrice instanceof Utf8 ? (Utf8)this.purchasePrice : null);
+          break;
+
+        case 9:
+          this.estimatedUnitTax = in.readString(this.estimatedUnitTax instanceof Utf8 ? (Utf8)this.estimatedUnitTax : null);
+          break;
+
+        case 10:
+          this.upc = in.readString(this.upc instanceof Utf8 ? (Utf8)this.upc : null);
+          break;
+
+        case 11:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.estimatedDeliveryDate = null;
+          } else {
+            this.estimatedDeliveryDate = in.readString(this.estimatedDeliveryDate instanceof Utf8 ? (Utf8)this.estimatedDeliveryDate : null);
+          }
+          break;
+
+        case 12:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.guaranteedToGetThereDate = null;
+          } else {
+            this.guaranteedToGetThereDate = in.readString(this.guaranteedToGetThereDate instanceof Utf8 ? (Utf8)this.guaranteedToGetThereDate : null);
+          }
+          break;
+
+        case 13:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.lineItemType = null;
+          } else {
+            this.lineItemType = in.readString(this.lineItemType instanceof Utf8 ? (Utf8)this.lineItemType : null);
+          }
+          break;
+
+        case 14:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.lineItemProperties = null;
+          } else {
+            long size0 = in.readMapStart();
+            java.util.Map<java.lang.CharSequence,java.lang.CharSequence> m0 = this.lineItemProperties; // Need fresh name due to limitation of macro system
+            if (m0 == null) {
+              m0 = new java.util.HashMap<java.lang.CharSequence,java.lang.CharSequence>((int)size0);
+              this.lineItemProperties = m0;
+            } else m0.clear();
+            for ( ; 0 < size0; size0 = in.mapNext()) {
+              for ( ; size0 != 0; size0--) {
+                java.lang.CharSequence k0 = null;
+                k0 = in.readString(k0 instanceof Utf8 ? (Utf8)k0 : null);
+                java.lang.CharSequence v0 = null;
+                v0 = in.readString(v0 instanceof Utf8 ? (Utf8)v0 : null);
+                m0.put(k0, v0);
+              }
+            }
+          }
+          break;
+
+        case 15:
+          long size1 = in.readArrayStart();
+          java.util.List<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> a1 = this.attributes;
+          if (a1 == null) {
+            a1 = new SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>>((int)size1, SCHEMA$.getField("attributes").schema());
+            this.attributes = a1;
+          } else a1.clear();
+          SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<java.util.Map<java.lang.CharSequence,java.lang.CharSequence>>)a1 : null);
+          for ( ; 0 < size1; size1 = in.arrayNext()) {
+            for ( ; size1 != 0; size1--) {
+              java.util.Map<java.lang.CharSequence,java.lang.CharSequence> e1 = (ga1 != null ? ga1.peek() : null);
+              long size2 = in.readMapStart();
+              java.util.Map<java.lang.CharSequence,java.lang.CharSequence> m2 = e1; // Need fresh name due to limitation of macro system
+              if (m2 == null) {
+                m2 = new java.util.HashMap<java.lang.CharSequence,java.lang.CharSequence>((int)size2);
+                e1 = m2;
+              } else m2.clear();
+              for ( ; 0 < size2; size2 = in.mapNext()) {
+                for ( ; size2 != 0; size2--) {
+                  java.lang.CharSequence k2 = null;
+                  k2 = in.readString(k2 instanceof Utf8 ? (Utf8)k2 : null);
+                  java.lang.CharSequence v2 = null;
+                  v2 = in.readString(v2 instanceof Utf8 ? (Utf8)v2 : null);
+                  m2.put(k2, v2);
+                }
+              }
+              a1.add(e1);
+            }
+          }
+          break;
+
+        case 16:
+          if (this.taxDetails == null) {
+            this.taxDetails = new com.dsg.customerorder.avro.TaxDetails();
+          }
+          this.taxDetails.customDecode(in);
+          break;
+
+        case 17:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.fulfillmentDetails = null;
+          } else {
+            if (this.fulfillmentDetails == null) {
+              this.fulfillmentDetails = new com.dsg.customerorder.avro.FulfillmentDetails();
+            }
+            this.fulfillmentDetails.customDecode(in);
+          }
+          break;
+
+        case 18:
+          if (this.shippingDetails == null) {
+            this.shippingDetails = new com.dsg.customerorder.avro.ShippingDetails();
+          }
+          this.shippingDetails.customDecode(in);
+          break;
+
+        case 19:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.returnDetails = null;
+          } else {
+            if (this.returnDetails == null) {
+              this.returnDetails = new com.dsg.customerorder.avro.ReturnDetails();
+            }
+            this.returnDetails.customDecode(in);
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

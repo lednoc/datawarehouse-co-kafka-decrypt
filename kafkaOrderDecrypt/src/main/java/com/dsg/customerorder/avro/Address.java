@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Address extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 8442853664345964745L;
@@ -26,7 +27,16 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
       new BinaryMessageDecoder<Address>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Address> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Address> getDecoder() {
     return DECODER;
@@ -35,29 +45,39 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Address> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Address>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Address to a ByteBuffer. */
+  /**
+   * Serializes this Address to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Address from a ByteBuffer. */
+  /**
+   * Deserializes a Address from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Address instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Address fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence address1;
-  @Deprecated public java.lang.CharSequence address2;
-  @Deprecated public java.lang.CharSequence address3;
-  @Deprecated public java.lang.CharSequence city;
-  @Deprecated public java.lang.CharSequence state;
-  @Deprecated public java.lang.CharSequence postalCode;
-  @Deprecated public java.lang.CharSequence country;
+   private java.lang.CharSequence address1;
+   private java.lang.CharSequence address2;
+   private java.lang.CharSequence address3;
+   private java.lang.CharSequence city;
+   private java.lang.CharSequence state;
+   private java.lang.CharSequence postalCode;
+   private java.lang.CharSequence country;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -86,6 +106,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     this.country = country;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -97,7 +118,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     case 4: return state;
     case 5: return postalCode;
     case 6: return country;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -112,7 +133,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     case 4: state = (java.lang.CharSequence)value$; break;
     case 5: postalCode = (java.lang.CharSequence)value$; break;
     case 6: country = (java.lang.CharSequence)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -123,6 +144,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.CharSequence getAddress1() {
     return address1;
   }
+
 
   /**
    * Sets the value of the 'address1' field.
@@ -140,6 +162,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     return address2;
   }
 
+
   /**
    * Sets the value of the 'address2' field.
    * @param value the value to set.
@@ -155,6 +178,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.CharSequence getAddress3() {
     return address3;
   }
+
 
   /**
    * Sets the value of the 'address3' field.
@@ -172,6 +196,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     return city;
   }
 
+
   /**
    * Sets the value of the 'city' field.
    * @param value the value to set.
@@ -187,6 +212,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.CharSequence getState() {
     return state;
   }
+
 
   /**
    * Sets the value of the 'state' field.
@@ -204,6 +230,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     return postalCode;
   }
 
+
   /**
    * Sets the value of the 'postalCode' field.
    * @param value the value to set.
@@ -219,6 +246,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.CharSequence getCountry() {
     return country;
   }
+
 
   /**
    * Sets the value of the 'country' field.
@@ -242,7 +270,11 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Address RecordBuilder
    */
   public static com.dsg.customerorder.avro.Address.Builder newBuilder(com.dsg.customerorder.avro.Address.Builder other) {
-    return new com.dsg.customerorder.avro.Address.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Address.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Address.Builder(other);
+    }
   }
 
   /**
@@ -251,12 +283,17 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Address RecordBuilder
    */
   public static com.dsg.customerorder.avro.Address.Builder newBuilder(com.dsg.customerorder.avro.Address other) {
-    return new com.dsg.customerorder.avro.Address.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Address.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Address.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for Address instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Address>
     implements org.apache.avro.data.RecordBuilder<Address> {
 
@@ -281,31 +318,31 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
       super(other);
       if (isValidValue(fields()[0], other.address1)) {
         this.address1 = data().deepCopy(fields()[0].schema(), other.address1);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.address2)) {
         this.address2 = data().deepCopy(fields()[1].schema(), other.address2);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.address3)) {
         this.address3 = data().deepCopy(fields()[2].schema(), other.address3);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.city)) {
         this.city = data().deepCopy(fields()[3].schema(), other.city);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.state)) {
         this.state = data().deepCopy(fields()[4].schema(), other.state);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.postalCode)) {
         this.postalCode = data().deepCopy(fields()[5].schema(), other.postalCode);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.country)) {
         this.country = data().deepCopy(fields()[6].schema(), other.country);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
     }
 
@@ -314,7 +351,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.Address other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.address1)) {
         this.address1 = data().deepCopy(fields()[0].schema(), other.address1);
         fieldSetFlags()[0] = true;
@@ -352,6 +389,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     public java.lang.CharSequence getAddress1() {
       return address1;
     }
+
 
     /**
       * Sets the value of the 'address1' field.
@@ -392,6 +430,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
       return address2;
     }
 
+
     /**
       * Sets the value of the 'address2' field.
       * @param value The value of 'address2'.
@@ -430,6 +469,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     public java.lang.CharSequence getAddress3() {
       return address3;
     }
+
 
     /**
       * Sets the value of the 'address3' field.
@@ -470,6 +510,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
       return city;
     }
 
+
     /**
       * Sets the value of the 'city' field.
       * @param value The value of 'city'.
@@ -508,6 +549,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     public java.lang.CharSequence getState() {
       return state;
     }
+
 
     /**
       * Sets the value of the 'state' field.
@@ -548,6 +590,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
       return postalCode;
     }
 
+
     /**
       * Sets the value of the 'postalCode' field.
       * @param value The value of 'postalCode'.
@@ -586,6 +629,7 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     public java.lang.CharSequence getCountry() {
       return country;
     }
+
 
     /**
       * Sets the value of the 'country' field.
@@ -631,6 +675,8 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
         record.postalCode = fieldSetFlags()[5] ? this.postalCode : (java.lang.CharSequence) defaultValue(fields()[5]);
         record.country = fieldSetFlags()[6] ? this.country : (java.lang.CharSequence) defaultValue(fields()[6]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -655,4 +701,123 @@ public class Address extends org.apache.avro.specific.SpecificRecordBase impleme
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.address1);
+
+    if (this.address2 == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.address2);
+    }
+
+    if (this.address3 == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.address3);
+    }
+
+    out.writeString(this.city);
+
+    out.writeString(this.state);
+
+    out.writeString(this.postalCode);
+
+    out.writeString(this.country);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.address1 = in.readString(this.address1 instanceof Utf8 ? (Utf8)this.address1 : null);
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.address2 = null;
+      } else {
+        this.address2 = in.readString(this.address2 instanceof Utf8 ? (Utf8)this.address2 : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.address3 = null;
+      } else {
+        this.address3 = in.readString(this.address3 instanceof Utf8 ? (Utf8)this.address3 : null);
+      }
+
+      this.city = in.readString(this.city instanceof Utf8 ? (Utf8)this.city : null);
+
+      this.state = in.readString(this.state instanceof Utf8 ? (Utf8)this.state : null);
+
+      this.postalCode = in.readString(this.postalCode instanceof Utf8 ? (Utf8)this.postalCode : null);
+
+      this.country = in.readString(this.country instanceof Utf8 ? (Utf8)this.country : null);
+
+    } else {
+      for (int i = 0; i < 7; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.address1 = in.readString(this.address1 instanceof Utf8 ? (Utf8)this.address1 : null);
+          break;
+
+        case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.address2 = null;
+          } else {
+            this.address2 = in.readString(this.address2 instanceof Utf8 ? (Utf8)this.address2 : null);
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.address3 = null;
+          } else {
+            this.address3 = in.readString(this.address3 instanceof Utf8 ? (Utf8)this.address3 : null);
+          }
+          break;
+
+        case 3:
+          this.city = in.readString(this.city instanceof Utf8 ? (Utf8)this.city : null);
+          break;
+
+        case 4:
+          this.state = in.readString(this.state instanceof Utf8 ? (Utf8)this.state : null);
+          break;
+
+        case 5:
+          this.postalCode = in.readString(this.postalCode instanceof Utf8 ? (Utf8)this.postalCode : null);
+          break;
+
+        case 6:
+          this.country = in.readString(this.country instanceof Utf8 ? (Utf8)this.country : null);
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

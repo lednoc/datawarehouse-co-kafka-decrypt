@@ -20,7 +20,8 @@ spring:
 
     deserializer:
       key: org.apache.kafka.common.serialization.StringDeserializer
-      value: org.apache.kafka.common.serialization.StringDeserializer 
+      value: org.apache.kafka.common.serialization.StringDeserializer
+
     schema:
       registry:
         #url: https://kafkaschregaznp.dcsg.com:8082

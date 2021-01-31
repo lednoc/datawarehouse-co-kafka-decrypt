@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package com.dsg.customerorder.avro;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum Channel {
+public enum Channel implements org.apache.avro.generic.GenericEnumSymbol<Channel> {
   Desktop, Mobile, AOS, CallCenter, Native, Tablet, PhysicalStore, SecondSkin, Stackd  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"Channel\",\"namespace\":\"com.dsg.customerorder.avro\",\"symbols\":[\"Desktop\",\"Mobile\",\"AOS\",\"CallCenter\",\"Native\",\"Tablet\",\"PhysicalStore\",\"SecondSkin\",\"Stackd\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

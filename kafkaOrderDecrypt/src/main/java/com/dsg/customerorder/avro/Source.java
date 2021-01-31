@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package com.dsg.customerorder.avro;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum Source {
+public enum Source implements org.apache.avro.generic.GenericEnumSymbol<Source> {
   GolfGalaxy, FieldAndStream, DicksSportingGoods, DonorsChoose, Stackd, BBAIT  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"Source\",\"namespace\":\"com.dsg.customerorder.avro\",\"symbols\":[\"GolfGalaxy\",\"FieldAndStream\",\"DicksSportingGoods\",\"DonorsChoose\",\"Stackd\",\"BBAIT\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

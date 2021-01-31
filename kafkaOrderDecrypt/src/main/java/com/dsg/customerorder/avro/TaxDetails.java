@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -3364784131370604669L;
@@ -26,7 +27,16 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       new BinaryMessageDecoder<TaxDetails>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<TaxDetails> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<TaxDetails> getDecoder() {
     return DECODER;
@@ -35,31 +45,41 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<TaxDetails> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<TaxDetails>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this TaxDetails to a ByteBuffer. */
+  /**
+   * Serializes this TaxDetails to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a TaxDetails from a ByteBuffer. */
+  /**
+   * Deserializes a TaxDetails from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a TaxDetails instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static TaxDetails fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence taxProductCode;
-  @Deprecated public java.lang.CharSequence estimatedShipTax;
-  @Deprecated public java.lang.CharSequence actualShipTax;
-  @Deprecated public java.lang.CharSequence estimatedUnitTax;
-  @Deprecated public java.lang.CharSequence actualUnitTax;
-  @Deprecated public java.lang.CharSequence adminOriginId;
-  @Deprecated public java.lang.CharSequence physicalOriginId;
-  @Deprecated public java.lang.CharSequence adminDestinationId;
-  @Deprecated public java.lang.CharSequence destinationId;
+   private java.lang.CharSequence taxProductCode;
+   private java.lang.CharSequence estimatedShipTax;
+   private java.lang.CharSequence actualShipTax;
+   private java.lang.CharSequence estimatedUnitTax;
+   private java.lang.CharSequence actualUnitTax;
+   private java.lang.CharSequence adminOriginId;
+   private java.lang.CharSequence physicalOriginId;
+   private java.lang.CharSequence adminDestinationId;
+   private java.lang.CharSequence destinationId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -92,6 +112,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     this.destinationId = destinationId;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -105,7 +126,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     case 6: return physicalOriginId;
     case 7: return adminDestinationId;
     case 8: return destinationId;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -122,7 +143,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     case 6: physicalOriginId = (java.lang.CharSequence)value$; break;
     case 7: adminDestinationId = (java.lang.CharSequence)value$; break;
     case 8: destinationId = (java.lang.CharSequence)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -133,6 +154,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   public java.lang.CharSequence getTaxProductCode() {
     return taxProductCode;
   }
+
 
   /**
    * Sets the value of the 'taxProductCode' field.
@@ -150,6 +172,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     return estimatedShipTax;
   }
 
+
   /**
    * Sets the value of the 'estimatedShipTax' field.
    * @param value the value to set.
@@ -165,6 +188,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   public java.lang.CharSequence getActualShipTax() {
     return actualShipTax;
   }
+
 
   /**
    * Sets the value of the 'actualShipTax' field.
@@ -182,6 +206,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     return estimatedUnitTax;
   }
 
+
   /**
    * Sets the value of the 'estimatedUnitTax' field.
    * @param value the value to set.
@@ -197,6 +222,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   public java.lang.CharSequence getActualUnitTax() {
     return actualUnitTax;
   }
+
 
   /**
    * Sets the value of the 'actualUnitTax' field.
@@ -214,6 +240,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     return adminOriginId;
   }
 
+
   /**
    * Sets the value of the 'adminOriginId' field.
    * @param value the value to set.
@@ -229,6 +256,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   public java.lang.CharSequence getPhysicalOriginId() {
     return physicalOriginId;
   }
+
 
   /**
    * Sets the value of the 'physicalOriginId' field.
@@ -246,6 +274,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     return adminDestinationId;
   }
 
+
   /**
    * Sets the value of the 'adminDestinationId' field.
    * @param value the value to set.
@@ -261,6 +290,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
   public java.lang.CharSequence getDestinationId() {
     return destinationId;
   }
+
 
   /**
    * Sets the value of the 'destinationId' field.
@@ -284,7 +314,11 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
    * @return A new TaxDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.TaxDetails.Builder newBuilder(com.dsg.customerorder.avro.TaxDetails.Builder other) {
-    return new com.dsg.customerorder.avro.TaxDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.TaxDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.TaxDetails.Builder(other);
+    }
   }
 
   /**
@@ -293,12 +327,17 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
    * @return A new TaxDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.TaxDetails.Builder newBuilder(com.dsg.customerorder.avro.TaxDetails other) {
-    return new com.dsg.customerorder.avro.TaxDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.TaxDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.TaxDetails.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for TaxDetails instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TaxDetails>
     implements org.apache.avro.data.RecordBuilder<TaxDetails> {
 
@@ -325,39 +364,39 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       super(other);
       if (isValidValue(fields()[0], other.taxProductCode)) {
         this.taxProductCode = data().deepCopy(fields()[0].schema(), other.taxProductCode);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.estimatedShipTax)) {
         this.estimatedShipTax = data().deepCopy(fields()[1].schema(), other.estimatedShipTax);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.actualShipTax)) {
         this.actualShipTax = data().deepCopy(fields()[2].schema(), other.actualShipTax);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.estimatedUnitTax)) {
         this.estimatedUnitTax = data().deepCopy(fields()[3].schema(), other.estimatedUnitTax);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.actualUnitTax)) {
         this.actualUnitTax = data().deepCopy(fields()[4].schema(), other.actualUnitTax);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.adminOriginId)) {
         this.adminOriginId = data().deepCopy(fields()[5].schema(), other.adminOriginId);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.physicalOriginId)) {
         this.physicalOriginId = data().deepCopy(fields()[6].schema(), other.physicalOriginId);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.adminDestinationId)) {
         this.adminDestinationId = data().deepCopy(fields()[7].schema(), other.adminDestinationId);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.destinationId)) {
         this.destinationId = data().deepCopy(fields()[8].schema(), other.destinationId);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
     }
 
@@ -366,7 +405,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.TaxDetails other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.taxProductCode)) {
         this.taxProductCode = data().deepCopy(fields()[0].schema(), other.taxProductCode);
         fieldSetFlags()[0] = true;
@@ -413,6 +452,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       return taxProductCode;
     }
 
+
     /**
       * Sets the value of the 'taxProductCode' field.
       * @param value The value of 'taxProductCode'.
@@ -451,6 +491,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     public java.lang.CharSequence getEstimatedShipTax() {
       return estimatedShipTax;
     }
+
 
     /**
       * Sets the value of the 'estimatedShipTax' field.
@@ -491,6 +532,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       return actualShipTax;
     }
 
+
     /**
       * Sets the value of the 'actualShipTax' field.
       * @param value The value of 'actualShipTax'.
@@ -529,6 +571,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     public java.lang.CharSequence getEstimatedUnitTax() {
       return estimatedUnitTax;
     }
+
 
     /**
       * Sets the value of the 'estimatedUnitTax' field.
@@ -569,6 +612,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       return actualUnitTax;
     }
 
+
     /**
       * Sets the value of the 'actualUnitTax' field.
       * @param value The value of 'actualUnitTax'.
@@ -607,6 +651,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     public java.lang.CharSequence getAdminOriginId() {
       return adminOriginId;
     }
+
 
     /**
       * Sets the value of the 'adminOriginId' field.
@@ -647,6 +692,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       return physicalOriginId;
     }
 
+
     /**
       * Sets the value of the 'physicalOriginId' field.
       * @param value The value of 'physicalOriginId'.
@@ -686,6 +732,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
       return adminDestinationId;
     }
 
+
     /**
       * Sets the value of the 'adminDestinationId' field.
       * @param value The value of 'adminDestinationId'.
@@ -724,6 +771,7 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     public java.lang.CharSequence getDestinationId() {
       return destinationId;
     }
+
 
     /**
       * Sets the value of the 'destinationId' field.
@@ -771,6 +819,8 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
         record.adminDestinationId = fieldSetFlags()[7] ? this.adminDestinationId : (java.lang.CharSequence) defaultValue(fields()[7]);
         record.destinationId = fieldSetFlags()[8] ? this.destinationId : (java.lang.CharSequence) defaultValue(fields()[8]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -795,4 +845,251 @@ public class TaxDetails extends org.apache.avro.specific.SpecificRecordBase impl
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    if (this.taxProductCode == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.taxProductCode);
+    }
+
+    if (this.estimatedShipTax == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.estimatedShipTax);
+    }
+
+    if (this.actualShipTax == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.actualShipTax);
+    }
+
+    if (this.estimatedUnitTax == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.estimatedUnitTax);
+    }
+
+    if (this.actualUnitTax == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.actualUnitTax);
+    }
+
+    if (this.adminOriginId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.adminOriginId);
+    }
+
+    if (this.physicalOriginId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.physicalOriginId);
+    }
+
+    if (this.adminDestinationId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.adminDestinationId);
+    }
+
+    if (this.destinationId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.destinationId);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.taxProductCode = null;
+      } else {
+        this.taxProductCode = in.readString(this.taxProductCode instanceof Utf8 ? (Utf8)this.taxProductCode : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.estimatedShipTax = null;
+      } else {
+        this.estimatedShipTax = in.readString(this.estimatedShipTax instanceof Utf8 ? (Utf8)this.estimatedShipTax : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.actualShipTax = null;
+      } else {
+        this.actualShipTax = in.readString(this.actualShipTax instanceof Utf8 ? (Utf8)this.actualShipTax : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.estimatedUnitTax = null;
+      } else {
+        this.estimatedUnitTax = in.readString(this.estimatedUnitTax instanceof Utf8 ? (Utf8)this.estimatedUnitTax : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.actualUnitTax = null;
+      } else {
+        this.actualUnitTax = in.readString(this.actualUnitTax instanceof Utf8 ? (Utf8)this.actualUnitTax : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.adminOriginId = null;
+      } else {
+        this.adminOriginId = in.readString(this.adminOriginId instanceof Utf8 ? (Utf8)this.adminOriginId : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.physicalOriginId = null;
+      } else {
+        this.physicalOriginId = in.readString(this.physicalOriginId instanceof Utf8 ? (Utf8)this.physicalOriginId : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.adminDestinationId = null;
+      } else {
+        this.adminDestinationId = in.readString(this.adminDestinationId instanceof Utf8 ? (Utf8)this.adminDestinationId : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.destinationId = null;
+      } else {
+        this.destinationId = in.readString(this.destinationId instanceof Utf8 ? (Utf8)this.destinationId : null);
+      }
+
+    } else {
+      for (int i = 0; i < 9; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.taxProductCode = null;
+          } else {
+            this.taxProductCode = in.readString(this.taxProductCode instanceof Utf8 ? (Utf8)this.taxProductCode : null);
+          }
+          break;
+
+        case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.estimatedShipTax = null;
+          } else {
+            this.estimatedShipTax = in.readString(this.estimatedShipTax instanceof Utf8 ? (Utf8)this.estimatedShipTax : null);
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.actualShipTax = null;
+          } else {
+            this.actualShipTax = in.readString(this.actualShipTax instanceof Utf8 ? (Utf8)this.actualShipTax : null);
+          }
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.estimatedUnitTax = null;
+          } else {
+            this.estimatedUnitTax = in.readString(this.estimatedUnitTax instanceof Utf8 ? (Utf8)this.estimatedUnitTax : null);
+          }
+          break;
+
+        case 4:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.actualUnitTax = null;
+          } else {
+            this.actualUnitTax = in.readString(this.actualUnitTax instanceof Utf8 ? (Utf8)this.actualUnitTax : null);
+          }
+          break;
+
+        case 5:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.adminOriginId = null;
+          } else {
+            this.adminOriginId = in.readString(this.adminOriginId instanceof Utf8 ? (Utf8)this.adminOriginId : null);
+          }
+          break;
+
+        case 6:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.physicalOriginId = null;
+          } else {
+            this.physicalOriginId = in.readString(this.physicalOriginId instanceof Utf8 ? (Utf8)this.physicalOriginId : null);
+          }
+          break;
+
+        case 7:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.adminDestinationId = null;
+          } else {
+            this.adminDestinationId = in.readString(this.adminDestinationId instanceof Utf8 ? (Utf8)this.adminDestinationId : null);
+          }
+          break;
+
+        case 8:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.destinationId = null;
+          } else {
+            this.destinationId = in.readString(this.destinationId instanceof Utf8 ? (Utf8)this.destinationId : null);
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

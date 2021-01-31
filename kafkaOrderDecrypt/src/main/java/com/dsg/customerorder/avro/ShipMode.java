@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package com.dsg.customerorder.avro;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum ShipMode {
+public enum ShipMode implements org.apache.avro.generic.GenericEnumSymbol<ShipMode> {
   Standard, Expedited, Express, APO, FPO, PO_Box, Curbside, Threshold, Room_of_Choice, Delivery_Assembly, Bopis  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"ShipMode\",\"namespace\":\"com.dsg.customerorder.avro\",\"symbols\":[\"Standard\",\"Expedited\",\"Express\",\"APO\",\"FPO\",\"PO_Box\",\"Curbside\",\"Threshold\",\"Room_of_Choice\",\"Delivery_Assembly\",\"Bopis\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

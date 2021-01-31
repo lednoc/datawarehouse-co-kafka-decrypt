@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package com.dsg.customerorder.avro;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum LineItemState {
+public enum LineItemState implements org.apache.avro.generic.GenericEnumSymbol<LineItemState> {
   in_process, canceled, fulfilled, placed, in_review, rejected, returned, ready_for_pickup  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"LineItemState\",\"namespace\":\"com.dsg.customerorder.avro\",\"symbols\":[\"in_process\",\"canceled\",\"fulfilled\",\"placed\",\"in_review\",\"rejected\",\"returned\",\"ready_for_pickup\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

@@ -64,13 +64,14 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class); 
         
-        //test 01/27/21
-        configProps.put(ProducerConfig.LINGER_MS_CONFIG, 200); //start at 5
-        configProps.put(ProducerConfig.BATCH_SIZE_CONFIG, 65536); //16384 is default -- big performance boost w raising!!  //98304 ~same perf
-        configProps.put(ProducerConfig.BUFFER_MEMORY_CONFIG,33554432);
+        //if max batch size or linger is hit, a batch will be sent.
+        configProps.put(ProducerConfig.LINGER_MS_CONFIG, 100); //default 0.  is the delay time before the batches are ready to be sent. if 0 batch sent immediately, even if only 1 msg
+        configProps.put(ProducerConfig.BATCH_SIZE_CONFIG, 65536); //16384 is default.  max size of a batch
+        
+        configProps.put(ProducerConfig.BUFFER_MEMORY_CONFIG,33554432); //33mb buffer messages are sent to
 
         configProps.put(ProducerConfig.ACKS_CONFIG,"1");
-
+        configProps.put(ProducerConfig.RETRIES_CONFIG,"1"); //retry 1 more time if a commit fails
         //
         
         

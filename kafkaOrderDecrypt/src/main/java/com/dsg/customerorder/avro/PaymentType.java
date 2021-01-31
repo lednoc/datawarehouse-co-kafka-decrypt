@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package com.dsg.customerorder.avro;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum PaymentType {
+public enum PaymentType implements org.apache.avro.generic.GenericEnumSymbol<PaymentType> {
   ValueLink, Mastercard, Visa, Discover, AmericanExpress, PLCC, Resiliency, JCB, COMC, DinersClub, PayPal, None  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"PaymentType\",\"namespace\":\"com.dsg.customerorder.avro\",\"symbols\":[\"ValueLink\",\"Mastercard\",\"Visa\",\"Discover\",\"AmericanExpress\",\"PLCC\",\"Resiliency\",\"JCB\",\"COMC\",\"DinersClub\",\"PayPal\",\"None\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

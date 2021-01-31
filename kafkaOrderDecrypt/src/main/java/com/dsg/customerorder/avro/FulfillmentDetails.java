@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 249921529024612428L;
@@ -26,7 +27,16 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
       new BinaryMessageDecoder<FulfillmentDetails>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<FulfillmentDetails> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<FulfillmentDetails> getDecoder() {
     return DECODER;
@@ -35,27 +45,37 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<FulfillmentDetails> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<FulfillmentDetails>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this FulfillmentDetails to a ByteBuffer. */
+  /**
+   * Serializes this FulfillmentDetails to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a FulfillmentDetails from a ByteBuffer. */
+  /**
+   * Deserializes a FulfillmentDetails from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a FulfillmentDetails instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static FulfillmentDetails fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence fulfillmentType;
-  @Deprecated public java.lang.CharSequence purchaseOrder;
-  @Deprecated public com.dsg.customerorder.avro.FulfillmentLocation fulfillmentLocation;
-  @Deprecated public java.lang.CharSequence fulfillmentOrderId;
-  @Deprecated public java.lang.CharSequence timeShipped;
+   private java.lang.CharSequence fulfillmentType;
+   private java.lang.CharSequence purchaseOrder;
+   private com.dsg.customerorder.avro.FulfillmentLocation fulfillmentLocation;
+   private java.lang.CharSequence fulfillmentOrderId;
+   private java.lang.CharSequence timeShipped;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -80,6 +100,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     this.timeShipped = timeShipped;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -89,7 +110,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     case 2: return fulfillmentLocation;
     case 3: return fulfillmentOrderId;
     case 4: return timeShipped;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -102,7 +123,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     case 2: fulfillmentLocation = (com.dsg.customerorder.avro.FulfillmentLocation)value$; break;
     case 3: fulfillmentOrderId = (java.lang.CharSequence)value$; break;
     case 4: timeShipped = (java.lang.CharSequence)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -113,6 +134,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
   public java.lang.CharSequence getFulfillmentType() {
     return fulfillmentType;
   }
+
 
   /**
    * Sets the value of the 'fulfillmentType' field.
@@ -130,6 +152,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     return purchaseOrder;
   }
 
+
   /**
    * Sets the value of the 'purchaseOrder' field.
    * @param value the value to set.
@@ -145,6 +168,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
   public com.dsg.customerorder.avro.FulfillmentLocation getFulfillmentLocation() {
     return fulfillmentLocation;
   }
+
 
   /**
    * Sets the value of the 'fulfillmentLocation' field.
@@ -162,6 +186,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     return fulfillmentOrderId;
   }
 
+
   /**
    * Sets the value of the 'fulfillmentOrderId' field.
    * @param value the value to set.
@@ -177,6 +202,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
   public java.lang.CharSequence getTimeShipped() {
     return timeShipped;
   }
+
 
   /**
    * Sets the value of the 'timeShipped' field.
@@ -200,7 +226,11 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
    * @return A new FulfillmentDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.FulfillmentDetails.Builder newBuilder(com.dsg.customerorder.avro.FulfillmentDetails.Builder other) {
-    return new com.dsg.customerorder.avro.FulfillmentDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.FulfillmentDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.FulfillmentDetails.Builder(other);
+    }
   }
 
   /**
@@ -209,12 +239,17 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
    * @return A new FulfillmentDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.FulfillmentDetails.Builder newBuilder(com.dsg.customerorder.avro.FulfillmentDetails other) {
-    return new com.dsg.customerorder.avro.FulfillmentDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.FulfillmentDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.FulfillmentDetails.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for FulfillmentDetails instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<FulfillmentDetails>
     implements org.apache.avro.data.RecordBuilder<FulfillmentDetails> {
 
@@ -238,26 +273,26 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
       super(other);
       if (isValidValue(fields()[0], other.fulfillmentType)) {
         this.fulfillmentType = data().deepCopy(fields()[0].schema(), other.fulfillmentType);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.purchaseOrder)) {
         this.purchaseOrder = data().deepCopy(fields()[1].schema(), other.purchaseOrder);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.fulfillmentLocation)) {
         this.fulfillmentLocation = data().deepCopy(fields()[2].schema(), other.fulfillmentLocation);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (other.hasFulfillmentLocationBuilder()) {
         this.fulfillmentLocationBuilder = com.dsg.customerorder.avro.FulfillmentLocation.newBuilder(other.getFulfillmentLocationBuilder());
       }
       if (isValidValue(fields()[3], other.fulfillmentOrderId)) {
         this.fulfillmentOrderId = data().deepCopy(fields()[3].schema(), other.fulfillmentOrderId);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.timeShipped)) {
         this.timeShipped = data().deepCopy(fields()[4].schema(), other.timeShipped);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
     }
 
@@ -266,7 +301,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.FulfillmentDetails other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.fulfillmentType)) {
         this.fulfillmentType = data().deepCopy(fields()[0].schema(), other.fulfillmentType);
         fieldSetFlags()[0] = true;
@@ -297,6 +332,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     public java.lang.CharSequence getFulfillmentType() {
       return fulfillmentType;
     }
+
 
     /**
       * Sets the value of the 'fulfillmentType' field.
@@ -337,6 +373,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
       return purchaseOrder;
     }
 
+
     /**
       * Sets the value of the 'purchaseOrder' field.
       * @param value The value of 'purchaseOrder'.
@@ -375,6 +412,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     public com.dsg.customerorder.avro.FulfillmentLocation getFulfillmentLocation() {
       return fulfillmentLocation;
     }
+
 
     /**
       * Sets the value of the 'fulfillmentLocation' field.
@@ -417,6 +455,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.FulfillmentDetails.Builder setFulfillmentLocationBuilder(com.dsg.customerorder.avro.FulfillmentLocation.Builder value) {
       clearFulfillmentLocation();
       fulfillmentLocationBuilder = value;
@@ -449,6 +488,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     public java.lang.CharSequence getFulfillmentOrderId() {
       return fulfillmentOrderId;
     }
+
 
     /**
       * Sets the value of the 'fulfillmentOrderId' field.
@@ -489,6 +529,7 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
       return timeShipped;
     }
 
+
     /**
       * Sets the value of the 'timeShipped' field.
       * @param value The value of 'timeShipped'.
@@ -528,13 +569,20 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
         record.fulfillmentType = fieldSetFlags()[0] ? this.fulfillmentType : (java.lang.CharSequence) defaultValue(fields()[0]);
         record.purchaseOrder = fieldSetFlags()[1] ? this.purchaseOrder : (java.lang.CharSequence) defaultValue(fields()[1]);
         if (fulfillmentLocationBuilder != null) {
-          record.fulfillmentLocation = this.fulfillmentLocationBuilder.build();
+          try {
+            record.fulfillmentLocation = this.fulfillmentLocationBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("fulfillmentLocation"));
+            throw e;
+          }
         } else {
           record.fulfillmentLocation = fieldSetFlags()[2] ? this.fulfillmentLocation : (com.dsg.customerorder.avro.FulfillmentLocation) defaultValue(fields()[2]);
         }
         record.fulfillmentOrderId = fieldSetFlags()[3] ? this.fulfillmentOrderId : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.timeShipped = fieldSetFlags()[4] ? this.timeShipped : (java.lang.CharSequence) defaultValue(fields()[4]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -559,4 +607,161 @@ public class FulfillmentDetails extends org.apache.avro.specific.SpecificRecordB
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    if (this.fulfillmentType == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.fulfillmentType);
+    }
+
+    if (this.purchaseOrder == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.purchaseOrder);
+    }
+
+    if (this.fulfillmentLocation == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      this.fulfillmentLocation.customEncode(out);
+    }
+
+    if (this.fulfillmentOrderId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.fulfillmentOrderId);
+    }
+
+    if (this.timeShipped == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.timeShipped);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.fulfillmentType = null;
+      } else {
+        this.fulfillmentType = in.readString(this.fulfillmentType instanceof Utf8 ? (Utf8)this.fulfillmentType : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.purchaseOrder = null;
+      } else {
+        this.purchaseOrder = in.readString(this.purchaseOrder instanceof Utf8 ? (Utf8)this.purchaseOrder : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.fulfillmentLocation = null;
+      } else {
+        if (this.fulfillmentLocation == null) {
+          this.fulfillmentLocation = new com.dsg.customerorder.avro.FulfillmentLocation();
+        }
+        this.fulfillmentLocation.customDecode(in);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.fulfillmentOrderId = null;
+      } else {
+        this.fulfillmentOrderId = in.readString(this.fulfillmentOrderId instanceof Utf8 ? (Utf8)this.fulfillmentOrderId : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.timeShipped = null;
+      } else {
+        this.timeShipped = in.readString(this.timeShipped instanceof Utf8 ? (Utf8)this.timeShipped : null);
+      }
+
+    } else {
+      for (int i = 0; i < 5; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.fulfillmentType = null;
+          } else {
+            this.fulfillmentType = in.readString(this.fulfillmentType instanceof Utf8 ? (Utf8)this.fulfillmentType : null);
+          }
+          break;
+
+        case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.purchaseOrder = null;
+          } else {
+            this.purchaseOrder = in.readString(this.purchaseOrder instanceof Utf8 ? (Utf8)this.purchaseOrder : null);
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.fulfillmentLocation = null;
+          } else {
+            if (this.fulfillmentLocation == null) {
+              this.fulfillmentLocation = new com.dsg.customerorder.avro.FulfillmentLocation();
+            }
+            this.fulfillmentLocation.customDecode(in);
+          }
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.fulfillmentOrderId = null;
+          } else {
+            this.fulfillmentOrderId = in.readString(this.fulfillmentOrderId instanceof Utf8 ? (Utf8)this.fulfillmentOrderId : null);
+          }
+          break;
+
+        case 4:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.timeShipped = null;
+          } else {
+            this.timeShipped = in.readString(this.timeShipped instanceof Utf8 ? (Utf8)this.timeShipped : null);
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

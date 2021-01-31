@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -6727101120821349191L;
@@ -26,7 +27,16 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       new BinaryMessageDecoder<ShippingDetails>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<ShippingDetails> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<ShippingDetails> getDecoder() {
     return DECODER;
@@ -35,36 +45,46 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<ShippingDetails> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<ShippingDetails>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this ShippingDetails to a ByteBuffer. */
+  /**
+   * Serializes this ShippingDetails to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a ShippingDetails from a ByteBuffer. */
+  /**
+   * Deserializes a ShippingDetails from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a ShippingDetails instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static ShippingDetails fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence sku;
-  @Deprecated public java.lang.CharSequence upc;
-  @Deprecated public com.dsg.customerorder.avro.ShipMode shipMode;
-  @Deprecated public java.lang.CharSequence shipLocationId;
-  @Deprecated public com.dsg.customerorder.avro.Carrier carrier;
-  @Deprecated public java.lang.CharSequence finalShipMode;
-  @Deprecated public java.lang.CharSequence finalCarrier;
-  @Deprecated public java.lang.CharSequence classification;
-  @Deprecated public java.lang.CharSequence trackingId;
-  @Deprecated public java.lang.CharSequence originalShipCost;
-  @Deprecated public java.lang.CharSequence discount;
-  @Deprecated public java.lang.CharSequence purchaseShipCost;
-  @Deprecated public com.dsg.customerorder.avro.Person shippingRecipient;
-  @Deprecated public com.dsg.customerorder.avro.TaxDetails shippingTaxDetails;
+   private java.lang.CharSequence sku;
+   private java.lang.CharSequence upc;
+   private com.dsg.customerorder.avro.ShipMode shipMode;
+   private java.lang.CharSequence shipLocationId;
+   private com.dsg.customerorder.avro.Carrier carrier;
+   private java.lang.CharSequence finalShipMode;
+   private java.lang.CharSequence finalCarrier;
+   private java.lang.CharSequence classification;
+   private java.lang.CharSequence trackingId;
+   private java.lang.CharSequence originalShipCost;
+   private java.lang.CharSequence discount;
+   private java.lang.CharSequence purchaseShipCost;
+   private com.dsg.customerorder.avro.Person shippingRecipient;
+   private com.dsg.customerorder.avro.TaxDetails shippingTaxDetails;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -107,6 +127,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     this.shippingTaxDetails = shippingTaxDetails;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -125,7 +146,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     case 11: return purchaseShipCost;
     case 12: return shippingRecipient;
     case 13: return shippingTaxDetails;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -147,7 +168,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     case 11: purchaseShipCost = (java.lang.CharSequence)value$; break;
     case 12: shippingRecipient = (com.dsg.customerorder.avro.Person)value$; break;
     case 13: shippingTaxDetails = (com.dsg.customerorder.avro.TaxDetails)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -158,6 +179,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.CharSequence getSku() {
     return sku;
   }
+
 
   /**
    * Sets the value of the 'sku' field.
@@ -175,6 +197,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return upc;
   }
 
+
   /**
    * Sets the value of the 'upc' field.
    * @param value the value to set.
@@ -190,6 +213,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public com.dsg.customerorder.avro.ShipMode getShipMode() {
     return shipMode;
   }
+
 
   /**
    * Sets the value of the 'shipMode' field.
@@ -207,6 +231,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return shipLocationId;
   }
 
+
   /**
    * Sets the value of the 'shipLocationId' field.
    * @param value the value to set.
@@ -222,6 +247,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public com.dsg.customerorder.avro.Carrier getCarrier() {
     return carrier;
   }
+
 
   /**
    * Sets the value of the 'carrier' field.
@@ -239,6 +265,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return finalShipMode;
   }
 
+
   /**
    * Sets the value of the 'finalShipMode' field.
    * @param value the value to set.
@@ -254,6 +281,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.CharSequence getFinalCarrier() {
     return finalCarrier;
   }
+
 
   /**
    * Sets the value of the 'finalCarrier' field.
@@ -271,6 +299,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return classification;
   }
 
+
   /**
    * Sets the value of the 'classification' field.
    * @param value the value to set.
@@ -286,6 +315,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.CharSequence getTrackingId() {
     return trackingId;
   }
+
 
   /**
    * Sets the value of the 'trackingId' field.
@@ -303,6 +333,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return originalShipCost;
   }
 
+
   /**
    * Sets the value of the 'originalShipCost' field.
    * @param value the value to set.
@@ -318,6 +349,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.CharSequence getDiscount() {
     return discount;
   }
+
 
   /**
    * Sets the value of the 'discount' field.
@@ -335,6 +367,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return purchaseShipCost;
   }
 
+
   /**
    * Sets the value of the 'purchaseShipCost' field.
    * @param value the value to set.
@@ -351,6 +384,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     return shippingRecipient;
   }
 
+
   /**
    * Sets the value of the 'shippingRecipient' field.
    * @param value the value to set.
@@ -366,6 +400,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
   public com.dsg.customerorder.avro.TaxDetails getShippingTaxDetails() {
     return shippingTaxDetails;
   }
+
 
   /**
    * Sets the value of the 'shippingTaxDetails' field.
@@ -389,7 +424,11 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
    * @return A new ShippingDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.ShippingDetails.Builder newBuilder(com.dsg.customerorder.avro.ShippingDetails.Builder other) {
-    return new com.dsg.customerorder.avro.ShippingDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.ShippingDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.ShippingDetails.Builder(other);
+    }
   }
 
   /**
@@ -398,12 +437,17 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
    * @return A new ShippingDetails RecordBuilder
    */
   public static com.dsg.customerorder.avro.ShippingDetails.Builder newBuilder(com.dsg.customerorder.avro.ShippingDetails other) {
-    return new com.dsg.customerorder.avro.ShippingDetails.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.ShippingDetails.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.ShippingDetails.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for ShippingDetails instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ShippingDetails>
     implements org.apache.avro.data.RecordBuilder<ShippingDetails> {
 
@@ -437,62 +481,62 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       super(other);
       if (isValidValue(fields()[0], other.sku)) {
         this.sku = data().deepCopy(fields()[0].schema(), other.sku);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.upc)) {
         this.upc = data().deepCopy(fields()[1].schema(), other.upc);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.shipMode)) {
         this.shipMode = data().deepCopy(fields()[2].schema(), other.shipMode);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.shipLocationId)) {
         this.shipLocationId = data().deepCopy(fields()[3].schema(), other.shipLocationId);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.carrier)) {
         this.carrier = data().deepCopy(fields()[4].schema(), other.carrier);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.finalShipMode)) {
         this.finalShipMode = data().deepCopy(fields()[5].schema(), other.finalShipMode);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.finalCarrier)) {
         this.finalCarrier = data().deepCopy(fields()[6].schema(), other.finalCarrier);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.classification)) {
         this.classification = data().deepCopy(fields()[7].schema(), other.classification);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.trackingId)) {
         this.trackingId = data().deepCopy(fields()[8].schema(), other.trackingId);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
       if (isValidValue(fields()[9], other.originalShipCost)) {
         this.originalShipCost = data().deepCopy(fields()[9].schema(), other.originalShipCost);
-        fieldSetFlags()[9] = true;
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
       if (isValidValue(fields()[10], other.discount)) {
         this.discount = data().deepCopy(fields()[10].schema(), other.discount);
-        fieldSetFlags()[10] = true;
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
       if (isValidValue(fields()[11], other.purchaseShipCost)) {
         this.purchaseShipCost = data().deepCopy(fields()[11].schema(), other.purchaseShipCost);
-        fieldSetFlags()[11] = true;
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
       if (isValidValue(fields()[12], other.shippingRecipient)) {
         this.shippingRecipient = data().deepCopy(fields()[12].schema(), other.shippingRecipient);
-        fieldSetFlags()[12] = true;
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
       if (other.hasShippingRecipientBuilder()) {
         this.shippingRecipientBuilder = com.dsg.customerorder.avro.Person.newBuilder(other.getShippingRecipientBuilder());
       }
       if (isValidValue(fields()[13], other.shippingTaxDetails)) {
         this.shippingTaxDetails = data().deepCopy(fields()[13].schema(), other.shippingTaxDetails);
-        fieldSetFlags()[13] = true;
+        fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
       if (other.hasShippingTaxDetailsBuilder()) {
         this.shippingTaxDetailsBuilder = com.dsg.customerorder.avro.TaxDetails.newBuilder(other.getShippingTaxDetailsBuilder());
@@ -504,7 +548,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.ShippingDetails other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.sku)) {
         this.sku = data().deepCopy(fields()[0].schema(), other.sku);
         fieldSetFlags()[0] = true;
@@ -573,6 +617,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return sku;
     }
 
+
     /**
       * Sets the value of the 'sku' field.
       * @param value The value of 'sku'.
@@ -611,6 +656,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.CharSequence getUpc() {
       return upc;
     }
+
 
     /**
       * Sets the value of the 'upc' field.
@@ -651,6 +697,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return shipMode;
     }
 
+
     /**
       * Sets the value of the 'shipMode' field.
       * @param value The value of 'shipMode'.
@@ -689,6 +736,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.CharSequence getShipLocationId() {
       return shipLocationId;
     }
+
 
     /**
       * Sets the value of the 'shipLocationId' field.
@@ -729,6 +777,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return carrier;
     }
 
+
     /**
       * Sets the value of the 'carrier' field.
       * @param value The value of 'carrier'.
@@ -767,6 +816,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.CharSequence getFinalShipMode() {
       return finalShipMode;
     }
+
 
     /**
       * Sets the value of the 'finalShipMode' field.
@@ -807,6 +857,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return finalCarrier;
     }
 
+
     /**
       * Sets the value of the 'finalCarrier' field.
       * @param value The value of 'finalCarrier'.
@@ -845,6 +896,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.CharSequence getClassification() {
       return classification;
     }
+
 
     /**
       * Sets the value of the 'classification' field.
@@ -885,6 +937,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return trackingId;
     }
 
+
     /**
       * Sets the value of the 'trackingId' field.
       * @param value The value of 'trackingId'.
@@ -923,6 +976,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.CharSequence getOriginalShipCost() {
       return originalShipCost;
     }
+
 
     /**
       * Sets the value of the 'originalShipCost' field.
@@ -963,6 +1017,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return discount;
     }
 
+
     /**
       * Sets the value of the 'discount' field.
       * @param value The value of 'discount'.
@@ -1002,6 +1057,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
       return purchaseShipCost;
     }
 
+
     /**
       * Sets the value of the 'purchaseShipCost' field.
       * @param value The value of 'purchaseShipCost'.
@@ -1040,6 +1096,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public com.dsg.customerorder.avro.Person getShippingRecipient() {
       return shippingRecipient;
     }
+
 
     /**
       * Sets the value of the 'shippingRecipient' field.
@@ -1082,6 +1139,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.ShippingDetails.Builder setShippingRecipientBuilder(com.dsg.customerorder.avro.Person.Builder value) {
       clearShippingRecipient();
       shippingRecipientBuilder = value;
@@ -1114,6 +1172,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     public com.dsg.customerorder.avro.TaxDetails getShippingTaxDetails() {
       return shippingTaxDetails;
     }
+
 
     /**
       * Sets the value of the 'shippingTaxDetails' field.
@@ -1156,6 +1215,7 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.ShippingDetails.Builder setShippingTaxDetailsBuilder(com.dsg.customerorder.avro.TaxDetails.Builder value) {
       clearShippingTaxDetails();
       shippingTaxDetailsBuilder = value;
@@ -1199,16 +1259,28 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
         record.discount = fieldSetFlags()[10] ? this.discount : (java.lang.CharSequence) defaultValue(fields()[10]);
         record.purchaseShipCost = fieldSetFlags()[11] ? this.purchaseShipCost : (java.lang.CharSequence) defaultValue(fields()[11]);
         if (shippingRecipientBuilder != null) {
-          record.shippingRecipient = this.shippingRecipientBuilder.build();
+          try {
+            record.shippingRecipient = this.shippingRecipientBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("shippingRecipient"));
+            throw e;
+          }
         } else {
           record.shippingRecipient = fieldSetFlags()[12] ? this.shippingRecipient : (com.dsg.customerorder.avro.Person) defaultValue(fields()[12]);
         }
         if (shippingTaxDetailsBuilder != null) {
-          record.shippingTaxDetails = this.shippingTaxDetailsBuilder.build();
+          try {
+            record.shippingTaxDetails = this.shippingTaxDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("shippingTaxDetails"));
+            throw e;
+          }
         } else {
           record.shippingTaxDetails = fieldSetFlags()[13] ? this.shippingTaxDetails : (com.dsg.customerorder.avro.TaxDetails) defaultValue(fields()[13]);
         }
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -1233,4 +1305,271 @@ public class ShippingDetails extends org.apache.avro.specific.SpecificRecordBase
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    if (this.sku == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.sku);
+    }
+
+    if (this.upc == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.upc);
+    }
+
+    out.writeEnum(this.shipMode.ordinal());
+
+    if (this.shipLocationId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.shipLocationId);
+    }
+
+    out.writeEnum(this.carrier.ordinal());
+
+    if (this.finalShipMode == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.finalShipMode);
+    }
+
+    if (this.finalCarrier == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.finalCarrier);
+    }
+
+    if (this.classification == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.classification);
+    }
+
+    if (this.trackingId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.trackingId);
+    }
+
+    out.writeString(this.originalShipCost);
+
+    out.writeString(this.discount);
+
+    out.writeString(this.purchaseShipCost);
+
+    this.shippingRecipient.customEncode(out);
+
+    this.shippingTaxDetails.customEncode(out);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.sku = null;
+      } else {
+        this.sku = in.readString(this.sku instanceof Utf8 ? (Utf8)this.sku : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.upc = null;
+      } else {
+        this.upc = in.readString(this.upc instanceof Utf8 ? (Utf8)this.upc : null);
+      }
+
+      this.shipMode = com.dsg.customerorder.avro.ShipMode.values()[in.readEnum()];
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.shipLocationId = null;
+      } else {
+        this.shipLocationId = in.readString(this.shipLocationId instanceof Utf8 ? (Utf8)this.shipLocationId : null);
+      }
+
+      this.carrier = com.dsg.customerorder.avro.Carrier.values()[in.readEnum()];
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.finalShipMode = null;
+      } else {
+        this.finalShipMode = in.readString(this.finalShipMode instanceof Utf8 ? (Utf8)this.finalShipMode : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.finalCarrier = null;
+      } else {
+        this.finalCarrier = in.readString(this.finalCarrier instanceof Utf8 ? (Utf8)this.finalCarrier : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.classification = null;
+      } else {
+        this.classification = in.readString(this.classification instanceof Utf8 ? (Utf8)this.classification : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.trackingId = null;
+      } else {
+        this.trackingId = in.readString(this.trackingId instanceof Utf8 ? (Utf8)this.trackingId : null);
+      }
+
+      this.originalShipCost = in.readString(this.originalShipCost instanceof Utf8 ? (Utf8)this.originalShipCost : null);
+
+      this.discount = in.readString(this.discount instanceof Utf8 ? (Utf8)this.discount : null);
+
+      this.purchaseShipCost = in.readString(this.purchaseShipCost instanceof Utf8 ? (Utf8)this.purchaseShipCost : null);
+
+      if (this.shippingRecipient == null) {
+        this.shippingRecipient = new com.dsg.customerorder.avro.Person();
+      }
+      this.shippingRecipient.customDecode(in);
+
+      if (this.shippingTaxDetails == null) {
+        this.shippingTaxDetails = new com.dsg.customerorder.avro.TaxDetails();
+      }
+      this.shippingTaxDetails.customDecode(in);
+
+    } else {
+      for (int i = 0; i < 14; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.sku = null;
+          } else {
+            this.sku = in.readString(this.sku instanceof Utf8 ? (Utf8)this.sku : null);
+          }
+          break;
+
+        case 1:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.upc = null;
+          } else {
+            this.upc = in.readString(this.upc instanceof Utf8 ? (Utf8)this.upc : null);
+          }
+          break;
+
+        case 2:
+          this.shipMode = com.dsg.customerorder.avro.ShipMode.values()[in.readEnum()];
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.shipLocationId = null;
+          } else {
+            this.shipLocationId = in.readString(this.shipLocationId instanceof Utf8 ? (Utf8)this.shipLocationId : null);
+          }
+          break;
+
+        case 4:
+          this.carrier = com.dsg.customerorder.avro.Carrier.values()[in.readEnum()];
+          break;
+
+        case 5:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.finalShipMode = null;
+          } else {
+            this.finalShipMode = in.readString(this.finalShipMode instanceof Utf8 ? (Utf8)this.finalShipMode : null);
+          }
+          break;
+
+        case 6:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.finalCarrier = null;
+          } else {
+            this.finalCarrier = in.readString(this.finalCarrier instanceof Utf8 ? (Utf8)this.finalCarrier : null);
+          }
+          break;
+
+        case 7:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.classification = null;
+          } else {
+            this.classification = in.readString(this.classification instanceof Utf8 ? (Utf8)this.classification : null);
+          }
+          break;
+
+        case 8:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.trackingId = null;
+          } else {
+            this.trackingId = in.readString(this.trackingId instanceof Utf8 ? (Utf8)this.trackingId : null);
+          }
+          break;
+
+        case 9:
+          this.originalShipCost = in.readString(this.originalShipCost instanceof Utf8 ? (Utf8)this.originalShipCost : null);
+          break;
+
+        case 10:
+          this.discount = in.readString(this.discount instanceof Utf8 ? (Utf8)this.discount : null);
+          break;
+
+        case 11:
+          this.purchaseShipCost = in.readString(this.purchaseShipCost instanceof Utf8 ? (Utf8)this.purchaseShipCost : null);
+          break;
+
+        case 12:
+          if (this.shippingRecipient == null) {
+            this.shippingRecipient = new com.dsg.customerorder.avro.Person();
+          }
+          this.shippingRecipient.customDecode(in);
+          break;
+
+        case 13:
+          if (this.shippingTaxDetails == null) {
+            this.shippingTaxDetails = new com.dsg.customerorder.avro.TaxDetails();
+          }
+          this.shippingTaxDetails.customDecode(in);
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

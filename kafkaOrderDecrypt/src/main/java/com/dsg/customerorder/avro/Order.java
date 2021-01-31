@@ -5,12 +5,13 @@
  */
 package com.dsg.customerorder.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 /** Defines specifications of the order */
 @org.apache.avro.specific.AvroGenerated
 public class Order extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
@@ -27,7 +28,16 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       new BinaryMessageDecoder<Order>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Order> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Order> getDecoder() {
     return DECODER;
@@ -36,36 +46,46 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Order> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Order>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Order to a ByteBuffer. */
+  /**
+   * Serializes this Order to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Order from a ByteBuffer. */
+  /**
+   * Deserializes a Order from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Order instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Order fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence orderNumber;
-  @Deprecated public com.dsg.customerorder.avro.State state;
-  @Deprecated public com.dsg.customerorder.avro.Source source;
-  @Deprecated public com.dsg.customerorder.avro.Channel channel;
-  @Deprecated public com.dsg.customerorder.avro.OrderType orderType;
-  @Deprecated public java.lang.CharSequence timePlaced;
-  @Deprecated public java.lang.CharSequence lastUpdated;
-  @Deprecated public java.lang.CharSequence identityId;
-  @Deprecated public java.lang.CharSequence authId;
-  @Deprecated public com.dsg.customerorder.avro.Person customerDetails;
-  @Deprecated public java.util.List<com.dsg.customerorder.avro.Payment> payments;
-  @Deprecated public java.lang.CharSequence rewardCertificates;
-  @Deprecated public com.dsg.customerorder.avro.CancelDetails cancelDetails;
-  @Deprecated public java.util.List<com.dsg.customerorder.avro.LineItem> lineItems;
+   private java.lang.CharSequence orderNumber;
+   private com.dsg.customerorder.avro.State state;
+   private com.dsg.customerorder.avro.Source source;
+   private com.dsg.customerorder.avro.Channel channel;
+   private com.dsg.customerorder.avro.OrderType orderType;
+   private java.lang.CharSequence timePlaced;
+   private java.lang.CharSequence lastUpdated;
+   private java.lang.CharSequence identityId;
+   private java.lang.CharSequence authId;
+   private com.dsg.customerorder.avro.Person customerDetails;
+   private java.util.List<com.dsg.customerorder.avro.Payment> payments;
+   private java.lang.CharSequence rewardCertificates;
+   private com.dsg.customerorder.avro.CancelDetails cancelDetails;
+   private java.util.List<com.dsg.customerorder.avro.LineItem> lineItems;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -108,6 +128,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     this.lineItems = lineItems;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -126,7 +147,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     case 11: return rewardCertificates;
     case 12: return cancelDetails;
     case 13: return lineItems;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -148,7 +169,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     case 11: rewardCertificates = (java.lang.CharSequence)value$; break;
     case 12: cancelDetails = (com.dsg.customerorder.avro.CancelDetails)value$; break;
     case 13: lineItems = (java.util.List<com.dsg.customerorder.avro.LineItem>)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -159,6 +180,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public java.lang.CharSequence getOrderNumber() {
     return orderNumber;
   }
+
 
   /**
    * Sets the value of the 'orderNumber' field.
@@ -176,6 +198,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return state;
   }
 
+
   /**
    * Sets the value of the 'state' field.
    * @param value the value to set.
@@ -191,6 +214,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public com.dsg.customerorder.avro.Source getSource() {
     return source;
   }
+
 
   /**
    * Sets the value of the 'source' field.
@@ -208,6 +232,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return channel;
   }
 
+
   /**
    * Sets the value of the 'channel' field.
    * @param value the value to set.
@@ -223,6 +248,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public com.dsg.customerorder.avro.OrderType getOrderType() {
     return orderType;
   }
+
 
   /**
    * Sets the value of the 'orderType' field.
@@ -240,6 +266,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return timePlaced;
   }
 
+
   /**
    * Sets the value of the 'timePlaced' field.
    * @param value the value to set.
@@ -255,6 +282,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public java.lang.CharSequence getLastUpdated() {
     return lastUpdated;
   }
+
 
   /**
    * Sets the value of the 'lastUpdated' field.
@@ -272,6 +300,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return identityId;
   }
 
+
   /**
    * Sets the value of the 'identityId' field.
    * @param value the value to set.
@@ -287,6 +316,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public java.lang.CharSequence getAuthId() {
     return authId;
   }
+
 
   /**
    * Sets the value of the 'authId' field.
@@ -304,6 +334,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return customerDetails;
   }
 
+
   /**
    * Sets the value of the 'customerDetails' field.
    * @param value the value to set.
@@ -319,6 +350,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public java.util.List<com.dsg.customerorder.avro.Payment> getPayments() {
     return payments;
   }
+
 
   /**
    * Sets the value of the 'payments' field.
@@ -336,6 +368,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return rewardCertificates;
   }
 
+
   /**
    * Sets the value of the 'rewardCertificates' field.
    * @param value the value to set.
@@ -352,6 +385,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     return cancelDetails;
   }
 
+
   /**
    * Sets the value of the 'cancelDetails' field.
    * @param value the value to set.
@@ -367,6 +401,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public java.util.List<com.dsg.customerorder.avro.LineItem> getLineItems() {
     return lineItems;
   }
+
 
   /**
    * Sets the value of the 'lineItems' field.
@@ -390,7 +425,11 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @return A new Order RecordBuilder
    */
   public static com.dsg.customerorder.avro.Order.Builder newBuilder(com.dsg.customerorder.avro.Order.Builder other) {
-    return new com.dsg.customerorder.avro.Order.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Order.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Order.Builder(other);
+    }
   }
 
   /**
@@ -399,12 +438,17 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @return A new Order RecordBuilder
    */
   public static com.dsg.customerorder.avro.Order.Builder newBuilder(com.dsg.customerorder.avro.Order other) {
-    return new com.dsg.customerorder.avro.Order.Builder(other);
+    if (other == null) {
+      return new com.dsg.customerorder.avro.Order.Builder();
+    } else {
+      return new com.dsg.customerorder.avro.Order.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for Order instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Order>
     implements org.apache.avro.data.RecordBuilder<Order> {
 
@@ -438,65 +482,65 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       super(other);
       if (isValidValue(fields()[0], other.orderNumber)) {
         this.orderNumber = data().deepCopy(fields()[0].schema(), other.orderNumber);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.state)) {
         this.state = data().deepCopy(fields()[1].schema(), other.state);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.source)) {
         this.source = data().deepCopy(fields()[2].schema(), other.source);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.channel)) {
         this.channel = data().deepCopy(fields()[3].schema(), other.channel);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.orderType)) {
         this.orderType = data().deepCopy(fields()[4].schema(), other.orderType);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.timePlaced)) {
         this.timePlaced = data().deepCopy(fields()[5].schema(), other.timePlaced);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.lastUpdated)) {
         this.lastUpdated = data().deepCopy(fields()[6].schema(), other.lastUpdated);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.identityId)) {
         this.identityId = data().deepCopy(fields()[7].schema(), other.identityId);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.authId)) {
         this.authId = data().deepCopy(fields()[8].schema(), other.authId);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
       if (isValidValue(fields()[9], other.customerDetails)) {
         this.customerDetails = data().deepCopy(fields()[9].schema(), other.customerDetails);
-        fieldSetFlags()[9] = true;
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
       if (other.hasCustomerDetailsBuilder()) {
         this.customerDetailsBuilder = com.dsg.customerorder.avro.Person.newBuilder(other.getCustomerDetailsBuilder());
       }
       if (isValidValue(fields()[10], other.payments)) {
         this.payments = data().deepCopy(fields()[10].schema(), other.payments);
-        fieldSetFlags()[10] = true;
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
       if (isValidValue(fields()[11], other.rewardCertificates)) {
         this.rewardCertificates = data().deepCopy(fields()[11].schema(), other.rewardCertificates);
-        fieldSetFlags()[11] = true;
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
       if (isValidValue(fields()[12], other.cancelDetails)) {
         this.cancelDetails = data().deepCopy(fields()[12].schema(), other.cancelDetails);
-        fieldSetFlags()[12] = true;
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
       if (other.hasCancelDetailsBuilder()) {
         this.cancelDetailsBuilder = com.dsg.customerorder.avro.CancelDetails.newBuilder(other.getCancelDetailsBuilder());
       }
       if (isValidValue(fields()[13], other.lineItems)) {
         this.lineItems = data().deepCopy(fields()[13].schema(), other.lineItems);
-        fieldSetFlags()[13] = true;
+        fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
     }
 
@@ -505,7 +549,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
      * @param other The existing instance to copy.
      */
     private Builder(com.dsg.customerorder.avro.Order other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.orderNumber)) {
         this.orderNumber = data().deepCopy(fields()[0].schema(), other.orderNumber);
         fieldSetFlags()[0] = true;
@@ -574,6 +618,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return orderNumber;
     }
 
+
     /**
       * Sets the value of the 'orderNumber' field.
       * @param value The value of 'orderNumber'.
@@ -612,6 +657,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public com.dsg.customerorder.avro.State getState() {
       return state;
     }
+
 
     /**
       * Sets the value of the 'state' field.
@@ -652,6 +698,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return source;
     }
 
+
     /**
       * Sets the value of the 'source' field.
       * @param value The value of 'source'.
@@ -690,6 +737,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public com.dsg.customerorder.avro.Channel getChannel() {
       return channel;
     }
+
 
     /**
       * Sets the value of the 'channel' field.
@@ -730,6 +778,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return orderType;
     }
 
+
     /**
       * Sets the value of the 'orderType' field.
       * @param value The value of 'orderType'.
@@ -768,6 +817,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public java.lang.CharSequence getTimePlaced() {
       return timePlaced;
     }
+
 
     /**
       * Sets the value of the 'timePlaced' field.
@@ -808,6 +858,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return lastUpdated;
     }
 
+
     /**
       * Sets the value of the 'lastUpdated' field.
       * @param value The value of 'lastUpdated'.
@@ -846,6 +897,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public java.lang.CharSequence getIdentityId() {
       return identityId;
     }
+
 
     /**
       * Sets the value of the 'identityId' field.
@@ -886,6 +938,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return authId;
     }
 
+
     /**
       * Sets the value of the 'authId' field.
       * @param value The value of 'authId'.
@@ -924,6 +977,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public com.dsg.customerorder.avro.Person getCustomerDetails() {
       return customerDetails;
     }
+
 
     /**
       * Sets the value of the 'customerDetails' field.
@@ -966,6 +1020,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.Order.Builder setCustomerDetailsBuilder(com.dsg.customerorder.avro.Person.Builder value) {
       clearCustomerDetails();
       customerDetailsBuilder = value;
@@ -998,6 +1053,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public java.util.List<com.dsg.customerorder.avro.Payment> getPayments() {
       return payments;
     }
+
 
     /**
       * Sets the value of the 'payments' field.
@@ -1038,6 +1094,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       return rewardCertificates;
     }
 
+
     /**
       * Sets the value of the 'rewardCertificates' field.
       * @param value The value of 'rewardCertificates'.
@@ -1076,6 +1133,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public com.dsg.customerorder.avro.CancelDetails getCancelDetails() {
       return cancelDetails;
     }
+
 
     /**
       * Sets the value of the 'cancelDetails' field.
@@ -1118,6 +1176,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
      * @param value The builder instance that must be set.
      * @return This builder.
      */
+
     public com.dsg.customerorder.avro.Order.Builder setCancelDetailsBuilder(com.dsg.customerorder.avro.CancelDetails.Builder value) {
       clearCancelDetails();
       cancelDetailsBuilder = value;
@@ -1150,6 +1209,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     public java.util.List<com.dsg.customerorder.avro.LineItem> getLineItems() {
       return lineItems;
     }
+
 
     /**
       * Sets the value of the 'lineItems' field.
@@ -1197,19 +1257,31 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
         record.identityId = fieldSetFlags()[7] ? this.identityId : (java.lang.CharSequence) defaultValue(fields()[7]);
         record.authId = fieldSetFlags()[8] ? this.authId : (java.lang.CharSequence) defaultValue(fields()[8]);
         if (customerDetailsBuilder != null) {
-          record.customerDetails = this.customerDetailsBuilder.build();
+          try {
+            record.customerDetails = this.customerDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("customerDetails"));
+            throw e;
+          }
         } else {
           record.customerDetails = fieldSetFlags()[9] ? this.customerDetails : (com.dsg.customerorder.avro.Person) defaultValue(fields()[9]);
         }
         record.payments = fieldSetFlags()[10] ? this.payments : (java.util.List<com.dsg.customerorder.avro.Payment>) defaultValue(fields()[10]);
         record.rewardCertificates = fieldSetFlags()[11] ? this.rewardCertificates : (java.lang.CharSequence) defaultValue(fields()[11]);
         if (cancelDetailsBuilder != null) {
-          record.cancelDetails = this.cancelDetailsBuilder.build();
+          try {
+            record.cancelDetails = this.cancelDetailsBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("cancelDetails"));
+            throw e;
+          }
         } else {
           record.cancelDetails = fieldSetFlags()[12] ? this.cancelDetails : (com.dsg.customerorder.avro.CancelDetails) defaultValue(fields()[12]);
         }
         record.lineItems = fieldSetFlags()[13] ? this.lineItems : (java.util.List<com.dsg.customerorder.avro.LineItem>) defaultValue(fields()[13]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -1234,4 +1306,309 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.orderNumber);
+
+    out.writeEnum(this.state.ordinal());
+
+    out.writeEnum(this.source.ordinal());
+
+    out.writeEnum(this.channel.ordinal());
+
+    out.writeEnum(this.orderType.ordinal());
+
+    out.writeString(this.timePlaced);
+
+    out.writeString(this.lastUpdated);
+
+    if (this.identityId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.identityId);
+    }
+
+    if (this.authId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.authId);
+    }
+
+    this.customerDetails.customEncode(out);
+
+    long size0 = this.payments.size();
+    out.writeArrayStart();
+    out.setItemCount(size0);
+    long actualSize0 = 0;
+    for (com.dsg.customerorder.avro.Payment e0: this.payments) {
+      actualSize0++;
+      out.startItem();
+      e0.customEncode(out);
+    }
+    out.writeArrayEnd();
+    if (actualSize0 != size0)
+      throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
+
+    if (this.rewardCertificates == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.rewardCertificates);
+    }
+
+    if (this.cancelDetails == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      this.cancelDetails.customEncode(out);
+    }
+
+    long size1 = this.lineItems.size();
+    out.writeArrayStart();
+    out.setItemCount(size1);
+    long actualSize1 = 0;
+    for (com.dsg.customerorder.avro.LineItem e1: this.lineItems) {
+      actualSize1++;
+      out.startItem();
+      e1.customEncode(out);
+    }
+    out.writeArrayEnd();
+    if (actualSize1 != size1)
+      throw new java.util.ConcurrentModificationException("Array-size written was " + size1 + ", but element count was " + actualSize1 + ".");
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.orderNumber = in.readString(this.orderNumber instanceof Utf8 ? (Utf8)this.orderNumber : null);
+
+      this.state = com.dsg.customerorder.avro.State.values()[in.readEnum()];
+
+      this.source = com.dsg.customerorder.avro.Source.values()[in.readEnum()];
+
+      this.channel = com.dsg.customerorder.avro.Channel.values()[in.readEnum()];
+
+      this.orderType = com.dsg.customerorder.avro.OrderType.values()[in.readEnum()];
+
+      this.timePlaced = in.readString(this.timePlaced instanceof Utf8 ? (Utf8)this.timePlaced : null);
+
+      this.lastUpdated = in.readString(this.lastUpdated instanceof Utf8 ? (Utf8)this.lastUpdated : null);
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.identityId = null;
+      } else {
+        this.identityId = in.readString(this.identityId instanceof Utf8 ? (Utf8)this.identityId : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.authId = null;
+      } else {
+        this.authId = in.readString(this.authId instanceof Utf8 ? (Utf8)this.authId : null);
+      }
+
+      if (this.customerDetails == null) {
+        this.customerDetails = new com.dsg.customerorder.avro.Person();
+      }
+      this.customerDetails.customDecode(in);
+
+      long size0 = in.readArrayStart();
+      java.util.List<com.dsg.customerorder.avro.Payment> a0 = this.payments;
+      if (a0 == null) {
+        a0 = new SpecificData.Array<com.dsg.customerorder.avro.Payment>((int)size0, SCHEMA$.getField("payments").schema());
+        this.payments = a0;
+      } else a0.clear();
+      SpecificData.Array<com.dsg.customerorder.avro.Payment> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<com.dsg.customerorder.avro.Payment>)a0 : null);
+      for ( ; 0 < size0; size0 = in.arrayNext()) {
+        for ( ; size0 != 0; size0--) {
+          com.dsg.customerorder.avro.Payment e0 = (ga0 != null ? ga0.peek() : null);
+          if (e0 == null) {
+            e0 = new com.dsg.customerorder.avro.Payment();
+          }
+          e0.customDecode(in);
+          a0.add(e0);
+        }
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.rewardCertificates = null;
+      } else {
+        this.rewardCertificates = in.readString(this.rewardCertificates instanceof Utf8 ? (Utf8)this.rewardCertificates : null);
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.cancelDetails = null;
+      } else {
+        if (this.cancelDetails == null) {
+          this.cancelDetails = new com.dsg.customerorder.avro.CancelDetails();
+        }
+        this.cancelDetails.customDecode(in);
+      }
+
+      long size1 = in.readArrayStart();
+      java.util.List<com.dsg.customerorder.avro.LineItem> a1 = this.lineItems;
+      if (a1 == null) {
+        a1 = new SpecificData.Array<com.dsg.customerorder.avro.LineItem>((int)size1, SCHEMA$.getField("lineItems").schema());
+        this.lineItems = a1;
+      } else a1.clear();
+      SpecificData.Array<com.dsg.customerorder.avro.LineItem> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<com.dsg.customerorder.avro.LineItem>)a1 : null);
+      for ( ; 0 < size1; size1 = in.arrayNext()) {
+        for ( ; size1 != 0; size1--) {
+          com.dsg.customerorder.avro.LineItem e1 = (ga1 != null ? ga1.peek() : null);
+          if (e1 == null) {
+            e1 = new com.dsg.customerorder.avro.LineItem();
+          }
+          e1.customDecode(in);
+          a1.add(e1);
+        }
+      }
+
+    } else {
+      for (int i = 0; i < 14; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.orderNumber = in.readString(this.orderNumber instanceof Utf8 ? (Utf8)this.orderNumber : null);
+          break;
+
+        case 1:
+          this.state = com.dsg.customerorder.avro.State.values()[in.readEnum()];
+          break;
+
+        case 2:
+          this.source = com.dsg.customerorder.avro.Source.values()[in.readEnum()];
+          break;
+
+        case 3:
+          this.channel = com.dsg.customerorder.avro.Channel.values()[in.readEnum()];
+          break;
+
+        case 4:
+          this.orderType = com.dsg.customerorder.avro.OrderType.values()[in.readEnum()];
+          break;
+
+        case 5:
+          this.timePlaced = in.readString(this.timePlaced instanceof Utf8 ? (Utf8)this.timePlaced : null);
+          break;
+
+        case 6:
+          this.lastUpdated = in.readString(this.lastUpdated instanceof Utf8 ? (Utf8)this.lastUpdated : null);
+          break;
+
+        case 7:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.identityId = null;
+          } else {
+            this.identityId = in.readString(this.identityId instanceof Utf8 ? (Utf8)this.identityId : null);
+          }
+          break;
+
+        case 8:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.authId = null;
+          } else {
+            this.authId = in.readString(this.authId instanceof Utf8 ? (Utf8)this.authId : null);
+          }
+          break;
+
+        case 9:
+          if (this.customerDetails == null) {
+            this.customerDetails = new com.dsg.customerorder.avro.Person();
+          }
+          this.customerDetails.customDecode(in);
+          break;
+
+        case 10:
+          long size0 = in.readArrayStart();
+          java.util.List<com.dsg.customerorder.avro.Payment> a0 = this.payments;
+          if (a0 == null) {
+            a0 = new SpecificData.Array<com.dsg.customerorder.avro.Payment>((int)size0, SCHEMA$.getField("payments").schema());
+            this.payments = a0;
+          } else a0.clear();
+          SpecificData.Array<com.dsg.customerorder.avro.Payment> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<com.dsg.customerorder.avro.Payment>)a0 : null);
+          for ( ; 0 < size0; size0 = in.arrayNext()) {
+            for ( ; size0 != 0; size0--) {
+              com.dsg.customerorder.avro.Payment e0 = (ga0 != null ? ga0.peek() : null);
+              if (e0 == null) {
+                e0 = new com.dsg.customerorder.avro.Payment();
+              }
+              e0.customDecode(in);
+              a0.add(e0);
+            }
+          }
+          break;
+
+        case 11:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.rewardCertificates = null;
+          } else {
+            this.rewardCertificates = in.readString(this.rewardCertificates instanceof Utf8 ? (Utf8)this.rewardCertificates : null);
+          }
+          break;
+
+        case 12:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.cancelDetails = null;
+          } else {
+            if (this.cancelDetails == null) {
+              this.cancelDetails = new com.dsg.customerorder.avro.CancelDetails();
+            }
+            this.cancelDetails.customDecode(in);
+          }
+          break;
+
+        case 13:
+          long size1 = in.readArrayStart();
+          java.util.List<com.dsg.customerorder.avro.LineItem> a1 = this.lineItems;
+          if (a1 == null) {
+            a1 = new SpecificData.Array<com.dsg.customerorder.avro.LineItem>((int)size1, SCHEMA$.getField("lineItems").schema());
+            this.lineItems = a1;
+          } else a1.clear();
+          SpecificData.Array<com.dsg.customerorder.avro.LineItem> ga1 = (a1 instanceof SpecificData.Array ? (SpecificData.Array<com.dsg.customerorder.avro.LineItem>)a1 : null);
+          for ( ; 0 < size1; size1 = in.arrayNext()) {
+            for ( ; size1 != 0; size1--) {
+              com.dsg.customerorder.avro.LineItem e1 = (ga1 != null ? ga1.peek() : null);
+              if (e1 == null) {
+                e1 = new com.dsg.customerorder.avro.LineItem();
+              }
+              e1.customDecode(in);
+              a1.add(e1);
+            }
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

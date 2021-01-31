@@ -35,6 +35,7 @@ import org.springframework.kafka.listener.SeekToCurrentBatchErrorHandler;
 import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer2;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.backoff.FixedBackOff;
 
@@ -43,6 +44,7 @@ import com.dsg.customerorder.avro.Order;
 
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
+
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -136,7 +138,7 @@ public class KafkaConsumerFactoryDDW {
 	  private KafkaTemplate<String, String> kafkaTemplate;
 	  
 
-	  public ConsumerFactory<String, Object> consumerFactory() {
+	  public ConsumerFactory<String, Order> consumerFactory() {  //orig String, Object
 		  
 		  
 	        Map<String, Object> props = new HashMap<>();
@@ -148,15 +150,18 @@ public class KafkaConsumerFactoryDDW {
 	        
 
 	        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializer);            
-	        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
+	        //orig props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
+	        
+	        //test
+	        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonSerializer.class); 
 	        
 	        
 	        /*
-					The DeadLetterPublishingRecoverer simply publishes the incoming ConsumerRecord contents.
+										
+					When the ErrorHandlingDeserializer2 detects a deserialization exception, these are forwarded to the listener container, which sends them directly to the error handler
 					
-					When the ErrorHandlingDeserializer2 detects a deserialization exception, there is no value() field in the ConsumerRecord (because it couldn't be deserialized).
-					
-					Instead, the failure is put into one of two headers: ErrorHandlingDeserializer2.VALUE_DESERIALIZER_EXCEPTION_HEADER or ErrorHandlingDeserializer2.KEY_DESERIALIZER_EXCEPTION_HEADER.
+					If deserial error occurs there is no value() field in the ConsumerRecord (because it couldn't be deserialized).
+					The failure is put into one of two headers: ErrorHandlingDeserializer2.VALUE_DESERIALIZER_EXCEPTION_HEADER or ErrorHandlingDeserializer2.KEY_DESERIALIZER_EXCEPTION_HEADER.
 					
 					You can obtain the details with
 					
@@ -211,16 +216,19 @@ public class KafkaConsumerFactoryDDW {
 	        //not using schema reg on platform
 	        //props.put("schema.registry.url", schemaRegistryUrl);
 
-	        return new DefaultKafkaConsumerFactory<>(props);
-	 
+	        //orig return new DefaultKafkaConsumerFactory<>(props);
+            //test
+	        
+	        return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),
+	                new JsonDeserializer<>(Order.class));
 	         
 	         
 	    }
       @Bean
-      public ConcurrentKafkaListenerContainerFactory<String, String> //orig String, Order
+      public ConcurrentKafkaListenerContainerFactory<String, Order>  //was String, String //orig String, Order
         kafkaListenerContainerFactory() {
       
-          ConcurrentKafkaListenerContainerFactory<String, String> factory =  //orig String, Order
+          ConcurrentKafkaListenerContainerFactory<String, Order> factory =  //was String, String   //orig String, Order
             new ConcurrentKafkaListenerContainerFactory<>();
           factory.setConsumerFactory(consumerFactory());
           
@@ -252,7 +260,7 @@ public class KafkaConsumerFactoryDDW {
              The SeekToCurrentErrorHandler discards remaining records from the poll() and performs seek operations on the consumer to 
              reset the offsets so that the discarded records are fetched again on the next poll. 
              By default, the error handler tracks the failed record, gives up after 10 delivery attempts, and logs the failed record. 
-             However, we can also send the failed message to another topic. We call this a dead letter topic.
+             However, we can also send the failed message to another topic. We call this a dead letter topic, named  topicName.DLT.
              
              //fixedbackoff() is passed time to delay and how many times to retry
               

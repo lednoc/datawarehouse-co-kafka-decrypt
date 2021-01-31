@@ -20,7 +20,7 @@
 			<!-- kc added -->
 
             <confluent.version>5.1.0</confluent.version>
-            <avro.version>1.8.2</avro.version>
+            <avro.version>1.10.1</avro.version>  <!-- orig 1.8.2 -->
              <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
              <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
              <sonar.language>java</sonar.language>
@@ -160,8 +160,28 @@
 			<groupId>com.dsg.customerorder.corsa</groupId>
 			<artifactId>co-rsa-private-prod</artifactId>
 			<version>0.0.1</version>
-		</dependency>		
+		</dependency>	
 		
+		  <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>	
+		<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-jmx</artifactId>
+    
+  
+
+
+
+
+
+</dependency>
+
 		
 	</dependencies>
 
