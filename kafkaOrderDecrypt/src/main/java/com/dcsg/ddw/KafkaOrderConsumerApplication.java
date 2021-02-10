@@ -1,10 +1,6 @@
 package com.dcsg.ddw;
 
-import static java.util.stream.Collectors.groupingBy;
 
-
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,10 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.util.StopWatch;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 
@@ -33,6 +32,8 @@ import com.dsg.customerorder.avro.Order;
 
 
 import org.apache.commons.lang.SerializationException;
+import org.apache.kafka.common.record.TimestampType;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
@@ -49,6 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
+@RestController
 public class KafkaOrderConsumerApplication implements CommandLineRunner { 
 	
     @Value("${spring.kafka.output.topic}")
@@ -64,8 +66,23 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     
-
-
+    //
+    @Autowired
+    private KafkaListenerEndpointRegistry registry;
+    @GetMapping("/stop/{listenerID}")
+    public void stop(@PathVariable String listenerID){
+        registry.getListenerContainer(listenerID).pause();
+    }
+    @GetMapping("/resume/{listenerID}")
+    public void resume(@PathVariable String listenerID){
+        registry.getListenerContainer(listenerID).resume();
+    }
+    @GetMapping("/start/{listenerID}")
+    public void start(@PathVariable String listenerID){
+        registry.getListenerContainer(listenerID).start();
+    }
+    
+    //
     private RSACryptoUtil rsaCryptoUtil;
 	
 	
@@ -95,7 +112,9 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	        public void orderListener( Order order, //consume message from input topic
 	        		 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
 	        		 @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition,
-	        		 @Header(KafkaHeaders.OFFSET) Long offset,	        		 
+	        		 @Header(KafkaHeaders.OFFSET) Long offset,
+	        		 @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long ts,
+
 	        		Acknowledgment ack
 	        		 ) 	        	        
 	        {
@@ -111,58 +130,21 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 		        	{
 
 			        	 
-		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   
-		        		
-		        	
-			        		/*test --fail
-			        		orderObj = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                                            .configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true)
-                                            .addMixIn(Address.class, IgnoreSchemaProperty.class)
-                                            .addMixIn(Person.class, IgnoreSchemaProperty.class)
-                                            .addMixIn(Payment.class, IgnoreSchemaProperty.class)
-            						        .addMixIn(TaxDetails.class, IgnoreSchemaProperty.class)
-            						        .addMixIn(ShippingDetails.class, IgnoreSchemaProperty.class)
-            						        .addMixIn(FulfillmentAddress.class, IgnoreSchemaProperty.class)
-            						        .addMixIn(FulfillmentLocation.class, IgnoreSchemaProperty.class)
-            						        .addMixIn(FulfillmentDetails.class, IgnoreSchemaProperty.class)
-					        	            .readValue(order, Order.class);
-
-			        		
-			        		
-
-			        	    */         
-						        	        
-			        		
-			        		//orig fastxml --works but thows error on send()
-			        		//orderObj = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-			        	    //         .readValue(order, Order.class);
-			        		
-			        		
-			        		//test - gson reader chokes on charsequence
-			        		//orderObj = new Gson().fromJson(order, Order.class);
-			        		//Gson gson = new GsonBuilder().create();
-			        					        		
-			        		//GsonBuilder builder = new GsonBuilder().registerTypeAdapter(java.lang.CharSequence.class, new CharSequenceAdapter());
-			        		//Gson gson = builder.create();
-			        		//orderObj =  gson.fromJson(order, Order.class);   
-			        	     
-			        	
-
-			        	   	
+		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   		        		
 			        
 			        	//StopWatch stopWatch = new StopWatch("KafkaTimer");
 			        	//stopWatch.start("initializing");
-
+		        		
 		        		decryptPIIWithRSA(order);	
-	                    produceDecryptOrders(key, order);
+	                    produceDecryptOrders(key, ts, order);
+	                    
 			        	//stopWatch.stop();
 			        	//System.out.println(stopWatch.prettyPrint());
 			        	 
 		        	}
 	
-			        	//consumer.commitAsync(); //old logic
 		        
-		        	//uncomment 1/27/21
+		        	
 		        	ack.acknowledge();  //new logic; passed basic test
 	        	}catch(Exception e)
 	        	{
@@ -183,9 +165,6 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				          rsaPrivateKeyFile
 				      );
 	
-				      //log.info("Decrypted first name is {}",rsaCryptoUtil.decryptFromBase64(order.getCustomerDetails().getFirstName().toString()));
-				      //log.info("Decrypted email id is {}", rsaCryptoUtil.decryptFromBase64(order.getCustomerDetails().getEmail().toString()));
-
 				      
 				      if(order.getCustomerDetails().getAddress().getAddress1() != null)
 				        order.getCustomerDetails().getAddress().setAddress1(rsaCryptoUtil.decryptFromBase64(order.getCustomerDetails().getAddress().getAddress1().toString()));
@@ -204,15 +183,12 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				       order.getCustomerDetails().getAddress().setCountry(rsaCryptoUtil.decryptFromBase64(order.getCustomerDetails().getAddress().getCountry().toString()));
 				      
 				      
-				      Map<CharSequence, List<LineItem>> lineMap = order.getLineItems().stream()
-					          .collect(groupingBy(lineItem -> lineItem.getExternalItemIdentifier()));
-
-					      for (CharSequence c : lineMap.keySet()) {
-					        LineItem lineItem = lineMap.get(c).get(0);
+						  for (LineItem lineItem : order.getLineItems()) {
+						        
 					        
-					        
-					        if(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress1() != null)
+					        if(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress1() != null )
 					        	lineItem.getShippingDetails().getShippingRecipient().getAddress().setAddress1(rsaCryptoUtil.decryptFromBase64(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress1().toString()));
+					        
 					        if(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress2() != null)
 					        	lineItem.getShippingDetails().getShippingRecipient().getAddress().setAddress2(rsaCryptoUtil.decryptFromBase64(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress2().toString()));
 					        if(lineItem.getShippingDetails().getShippingRecipient().getAddress().getAddress3() != null)
@@ -240,21 +216,16 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				  }
 			  
 			  
-			  private void produceDecryptOrders(String key, Order ord) {
+			  private void produceDecryptOrders(String key, Long ts, Order ord) {
 				    
 				    try {
 
 				      //System.out.println("producer called!");
 				    	
-				      //sample code if need to further process message before sending	
-				      //TXML eomOrder = eomXmlBuilder.generateEomXml(avroOrder);
-				      //ProducerRecord<String, Object> record = new ProducerRecord(outputTopic, key,
-				      //    eomXmlBuilder.marshallXml(eomOrder));
-				      
-	      
-				       //sendMessage(key, ord);
+
 				    	Gson gson = new GsonBuilder().serializeNulls().create();
-					    kafkaTemplate.send(outputTopic,key,gson.toJson(ord));
+					    kafkaTemplate.send(outputTopic, null, ts, key,gson.toJson(ord));
+
 				   
 				      
 
@@ -273,27 +244,6 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				  }
 			  
 			  
-/*
-			  public void sendMessage( String key, Order ord) {
-				  
-				  try {
-					  
-     
-					    Gson gson = new GsonBuilder().serializeNulls().create();
-					    kafkaTemplate.send(outputTopic,key,gson.toJson(ord));
-				  }
-					  
-					    catch (SerializationException e) {
-						     log.error("SerializationException sending data to producer" + e.toString());
-						    }
-				        catch (Exception e) { 
-			    	        log.error("Error in sending data to producer" + e.toString());
-		    	         }
-
-			 
-              }
-			  
-*/
 			  
 			  /* wont need addCallback() to get send() return code, if fails consumer loop will fail i.e. not ack + this runs slower
 			  private void produceDDWOrders(String key, Order ord) {

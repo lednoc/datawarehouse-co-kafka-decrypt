@@ -7,7 +7,7 @@ spring:
       name: customer-order-ddw-transformation
 
     output.topic: ddw-co-orders
-    input.topic: co-orders
+    #input.topic: ddw-co-orders-t1 #co-orders
 
     bootstrap:
       servers: pkc-122rj.eastus.azure.confluent.cloud:9092
