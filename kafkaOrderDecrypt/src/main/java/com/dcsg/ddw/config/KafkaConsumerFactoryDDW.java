@@ -137,6 +137,11 @@ public class KafkaConsumerFactoryDDW {
 	  @Autowired
 	  private KafkaTemplate<String, String> kafkaTemplate;
 	  
+	    @Bean
+	    public String inTopicName() {
+	        return inputTopic;
+	    }
+	  
 
 	  public ConsumerFactory<String, Order> consumerFactory() {  //orig String, Object
 		  

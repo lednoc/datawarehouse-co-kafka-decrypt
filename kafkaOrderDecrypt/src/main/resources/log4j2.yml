@@ -36,7 +36,7 @@ Configuration:
           pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
         Policies:
           SizeBasedTriggeringPolicy:
-            size: 1 KB
+            size: 10 MB
         DefaultRollOverStrategy:
           max: 30        
         

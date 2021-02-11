@@ -10,12 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -50,14 +48,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-@RestController
 public class KafkaOrderConsumerApplication implements CommandLineRunner { 
 	
     @Value("${spring.kafka.output.topic}")
-	  private String outputTopic;
-    
+	  private String outputTopic;    
+
     @Value("${rsa.privatekey}")
     private String rsaPrivateKeyFile;    
+    
+    @Value("${server.port}")
+    private int serverPort;
 	
 	//@Autowired
 	//private DDWOrderBuilder ddwOrderBuilder; 
@@ -66,24 +66,8 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     
-    //
-    @Autowired
-    private KafkaListenerEndpointRegistry registry;
-    @GetMapping("/stop/{listenerID}")
-    public void stop(@PathVariable String listenerID){
-        registry.getListenerContainer(listenerID).pause();
-    }
-    @GetMapping("/resume/{listenerID}")
-    public void resume(@PathVariable String listenerID){
-        registry.getListenerContainer(listenerID).resume();
-    }
-    @GetMapping("/start/{listenerID}")
-    public void start(@PathVariable String listenerID){
-        registry.getListenerContainer(listenerID).start();
-    }
-    
-    //
     private RSACryptoUtil rsaCryptoUtil;
+    
 	
 	
 	public static void main(String[] args) throws Exception{
@@ -107,7 +91,7 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	    	
 
 
-	        @KafkaListener(topics = "co-orders", containerFactory = "kafkaListenerContainerFactory")
+	        @KafkaListener(id="ddw-order-consumer-spring", topics ="#{@inTopicName}", containerFactory = "kafkaListenerContainerFactory")
 	        //public void orderListener(Order o) {
 	        public void orderListener( Order order, //consume message from input topic
 	        		 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
@@ -121,14 +105,13 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	        
 	        	
 	        	
-
-	        	
 	        	try
 	        	{
-		        	//System.out.printf("Records returned: %d%n", orders.size());
+		        	System.out.printf("Records returned: %d%n", serverPort);
 		        	if(order!= null) //need null check?
 		        	{
-
+                        
+		        		System.out.printf("processing:  %s%n", key);
 			        	 
 		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   		        		
 			        
