@@ -1,11 +1,14 @@
 package com.dcsg.ddw.transform;
 
+import com.dsg.customerorder.avro.LineItem;
+import com.dsg.customerorder.avro.Order;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.ShippingInfo;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.ShippingInfo.ShippingAddress;
 import com.dcsg.ddw.eom.TXML.Message.Order.PaymentDetails.PaymentDetail.BillToDetail;
-import com.dsg.customerorder.avro.LineItem;
-import com.dsg.customerorder.avro.Order;
 import com.dsg.customerorder.enums.ShippingDetailEnum;
+
+//kc
+//import com.dcsg.customerorder.avro.ShipMode;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

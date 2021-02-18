@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,37 +71,18 @@ public class KafkaProducerConfig {
 
         configProps.put(ProducerConfig.ACKS_CONFIG,"1");
         configProps.put(ProducerConfig.RETRIES_CONFIG,"1"); //retry 1 more time if a commit fails
-        //
-        
-        
-        
-        /* 10/20/20 use to connect to platform, dont use w devcon.yml
-        configProps.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, securityProtocol);
-        configProps.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, truststoreLocation);
-        configProps.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, truststorePassword);
-        configProps.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, keyPassword);
-        configProps.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, keystorePassword);
-        configProps.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, keystoreLocation);        
-        */
-        //10/20/20 new
+
         configProps.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, security_protocol);
         configProps.put(SslConfigs.SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG, ssl_end_id_algorithm);
         configProps.put("sasl.jaas.config", sasl_jaas_config);
         configProps.put("sasl.mechanism", sasl_mechanism);
-        
-        
+                
         
         //needed to write to topic in devcon i.e ccloud
-        //orig the code created the topic if didn't exist, now have to create manually first.
+        //orig the code created the topic if didn't exist, now have to create manually first in confluent cloud
         configProps.put("listeners", "PLAINTEXT://pkc-epzq5.eastus.azure.confluent.cloud:9092");
         configProps.put("advertised.listeners", "PLAINTEXT://pkc-epzq5.eastus.azure.confluent.cloud:9092");
         
-        //test
-        //configProps.put("listeners", "PLAINTEXT://localhost:9092");
-        //configProps.put("advertised.listeners", "PLAINTEXT://pkc-epzq5.eastus.azure.confluent.cloud:9092");
- 
-
-
         
         
         return new DefaultKafkaProducerFactory<>(configProps);

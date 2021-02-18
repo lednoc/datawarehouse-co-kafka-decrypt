@@ -1,20 +1,14 @@
 package com.dcsg.ddw.config;
 
-import java.util.Arrays;
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
 import org.apache.kafka.clients.CommonClientConfigs;
-import org.apache.kafka.clients.consumer.CommitFailedException;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.SslConfigs;
-import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,34 +18,25 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ContainerProperties.AckMode;
-import org.springframework.kafka.listener.BatchErrorHandler;
-import org.springframework.kafka.listener.BatchLoggingErrorHandler;
-import org.springframework.kafka.listener.ConsumerRecordRecoverer;
+
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
-import org.springframework.kafka.listener.RetryingBatchErrorHandler;
-import org.springframework.kafka.listener.SeekToCurrentBatchErrorHandler;
 import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer2;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.stereotype.Component;
-import org.springframework.util.backoff.FixedBackOff;
 
 import com.dsg.customerorder.avro.Order;
-//import com.dcsg.ddw.config.KafkaProducerConfig;
-
-import io.confluent.kafka.serializers.KafkaAvroDeserializer;
-import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
-
-import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
-//orig @Component
 
-//test
+//import lombok.extern.slf4j.Slf4j;
+
+
+//@Slf4j
 @EnableKafka
 @Configuration
 public class KafkaConsumerFactoryDDW {
@@ -76,9 +61,6 @@ public class KafkaConsumerFactoryDDW {
 
 	  @Value("${spring.kafka.serializer.output.value}")
 	  private String outputValueSerializer;
-
-	  //@Value("${spring.kafka.serializer.input.value}")
-	 // private String inputValueDeserializer;
 
 	  @Value("${spring.kafka.auto.offset.reset}")
 	  private String offsetReset;
@@ -148,22 +130,16 @@ public class KafkaConsumerFactoryDDW {
 		  
 	        Map<String, Object> props = new HashMap<>();
 	        
-	        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); //used when group 1st initialized; no committed yet 
-	        
+	        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); //used when group 1st initialized; no committed yet 	        
 	        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-	        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-	        
-
+	        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);	        
 	        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializer);            
-	        //orig props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
-	        
-	        //test
 	        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonSerializer.class); 
 	        
 	        
 	        /*
 										
-					When the ErrorHandlingDeserializer2 detects a deserialization exception, these are forwarded to the listener container, which sends them directly to the error handler
+					When the ErrorHandlingDeserializer detects a deserialization exception, these are forwarded to the listener container, which sends them directly to the error handler
 					
 					If deserial error occurs there is no value() field in the ConsumerRecord (because it couldn't be deserialized).
 					The failure is put into one of two headers: ErrorHandlingDeserializer2.VALUE_DESERIALIZER_EXCEPTION_HEADER or ErrorHandlingDeserializer2.KEY_DESERIALIZER_EXCEPTION_HEADER.
@@ -176,11 +152,8 @@ public class KafkaConsumerFactoryDDW {
 					with the original payload in ex.getData().
 			 */
 	        
-	        props.put(ErrorHandlingDeserializer2.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
-	        props.put(ErrorHandlingDeserializer2.VALUE_DESERIALIZER_CLASS, StringDeserializer.class);
-	    
-	            	       	    
-	        
+	        props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
+	        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, StringDeserializer.class);	            	       	           
 	        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,"false"); //false, so need to set ackmode in container	        
 	        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,"500");  //10 for dev/testing  //500 is default
 	        
@@ -192,37 +165,10 @@ public class KafkaConsumerFactoryDDW {
 	        //props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG,"10000"); //should be 1/3 session timeout
 	        
 	        props.put("client.id", clientId + "_" + System.currentTimeMillis());
-
-
-	        
-	        /* 10/20/20 use to connect to platform, dont use w devcon.yml
-	        props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, securityProtocol);
-	        props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, truststoreLocation);
-	        props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, truststorePassword);
-	        props.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, keyPassword);
-	        props.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, keystorePassword);
-	        props.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, keystoreLocation);
-	        */    
-	        
-	        //10/20/20 new
 	        props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, security_protocol);
 	        props.put(SslConfigs.SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG, ssl_end_id_algorithm);
 	        props.put("sasl.jaas.config", sasl_jaas_config);
 	        props.put("sasl.mechanism", sasl_mechanism);
-
-
-	        //
-	        
-	        //6/29 commented out following //look into using for err handle?
-	        //props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer2.class);
-	        //props.put(ErrorHandlingDeserializer2.VALUE_FUNCTION, KafkaErrorProvider.class);  
-	        
-	        
-	        //not using schema reg on platform
-	        //props.put("schema.registry.url", schemaRegistryUrl);
-
-	        //orig return new DefaultKafkaConsumerFactory<>(props);
-            //test
 	        
 	        return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),
 	                new JsonDeserializer<>(Order.class));
@@ -230,68 +176,60 @@ public class KafkaConsumerFactoryDDW {
 	         
 	    }
       @Bean
-      public ConcurrentKafkaListenerContainerFactory<String, Order>  //was String, String //orig String, Order
+      public ConcurrentKafkaListenerContainerFactory<String, Order>  
         kafkaListenerContainerFactory() {
       
-          ConcurrentKafkaListenerContainerFactory<String, Order> factory =  //was String, String   //orig String, Order
+          ConcurrentKafkaListenerContainerFactory<String, Order> factory = 
             new ConcurrentKafkaListenerContainerFactory<>();
           factory.setConsumerFactory(consumerFactory());
           
           //If we have scaling issues; can try to use the following property. 
           //Can set the number of consumers to match the # of partitions in the topic 
-          //orig uncommented 1/27/21
           factory.setConcurrency(5);
           
           factory.getContainerProperties().setPollTimeout(5000); //5000 is default; if u dont set this property
           factory.setBatchListener(false);  //return orders in batches
           
-          //AckMode.MANUAL if use, would need to call ack() after processing batch
+          //AckMode.MANUAL so need to call ack() after processing records
           //AckMode.BATCH = when the listener returns after handling the last message from the poll, the offset is committed.
-          //not sure if should do BATCH instead?
           
-          //orig uncommented 1/27/21 //didn't work when comment out, could be due to max poll change too!?
-          //set to batch in .yml, need to see which setting is used  //thinking manual will give more control
-          factory.getContainerProperties().setAckMode(AckMode.MANUAL); //msg listener must handle offset commits w call to ack.acknowledge()
+          factory.getContainerProperties().setAckMode(AckMode.MANUAL); //msg listener must handle offset commits w call to ack.acknowledge() //also, consumer has to have auto-commit = FALSE
+                    
+          //new code 2/17/21...untested
+          factory.setErrorHandler(new SeekToCurrentErrorHandler(recoverer()));
           
- 
+          //orig depricated 2/17/21!!
+          //factory.setErrorHandler(new SeekToCurrentErrorHandler(new DeadLetterPublishingRecoverer(kafkaTemplate)));
           
-          
-          factory.setErrorHandler(new SeekToCurrentErrorHandler(new DeadLetterPublishingRecoverer(kafkaTemplate)));
-          
-          //need to log err?
-          //factory.setBatchErrorHandler(new BatchLoggingErrorHandler()); //I think u can define own custom f() instead of BathcLoggingErrorHandler
-           
-          /*
-             The SeekToCurrentErrorHandler discards remaining records from the poll() and performs seek operations on the consumer to 
-             reset the offsets so that the discarded records are fetched again on the next poll. 
-             By default, the error handler tracks the failed record, gives up after 10 delivery attempts, and logs the failed record. 
-             However, we can also send the failed message to another topic. We call this a dead letter topic, named  topicName.DLT.
-             
-             //fixedbackoff() is passed time to delay and how many times to retry
-              
-         */
 
           
           return factory;
       }
       
+      //new code...untested!!  2/17/21!!
+      @Bean
+		public DeadLetterPublishingRecoverer recoverer() {
+			return new DeadLetterPublishingRecoverer( getEventKafkaTemplate(),
+					(record, ex) -> new TopicPartition("ddw-co-order-decrypt-dlq", -1)); //topic for orders that could not be processed
+		}
       
+      public KafkaOperations<String,String> getEventKafkaTemplate() { // producer to DLQ
+    	  
+
+    	    return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(kafkaTemplate.getProducerFactory().getConfigurationProperties()));
+      }
+      //end test
+      
+      /*orig  depricated 2/17/21!!
       @Bean
 		public DeadLetterPublishingRecoverer recoverer() {
 			return new DeadLetterPublishingRecoverer(kafkaTemplate,
 					(record, ex) -> new TopicPartition("ddw-co-order-decrypt-dlq", -1)); //topic for orders that could not be processed
 		}
+		
+	  */	
+		
 	 
-      /*
-      @Bean
-      public KafkaTemplate<String, String> kafkaTemplate() {
-          return new KafkaTemplate<>(producerFactory());
-      }
-      */
-      
 
-//need this?
-//	public SchemaRegistryClient getSchemaRegistryClient() {
-//		return new CachedSchemaRegistryClient(kConf.getRegistryServer(), 255);}
 
 }

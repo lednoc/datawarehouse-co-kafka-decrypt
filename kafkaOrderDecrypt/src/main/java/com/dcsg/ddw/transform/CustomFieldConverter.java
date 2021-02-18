@@ -1,8 +1,8 @@
 package com.dcsg.ddw.transform;
 
+import com.dsg.customerorder.avro.Order;
 import com.dcsg.ddw.eom.TXML.Message.Order.CustomFieldList;
 import com.dcsg.ddw.eom.TXML.Message.Order.CustomFieldList.CustomField;
-import com.dsg.customerorder.avro.Order;
 import com.dsg.customerorder.enums.OrderChannelEnum;
 
 import java.util.ArrayList;

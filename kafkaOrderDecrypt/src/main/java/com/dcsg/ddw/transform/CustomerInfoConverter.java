@@ -1,8 +1,8 @@
 package com.dcsg.ddw.transform;
 
-import com.dcsg.ddw.eom.TXML.Message.Order.CustomerInfo;
 import com.dsg.customerorder.avro.Order;
 import com.dsg.customerorder.avro.Person;
+import com.dcsg.ddw.eom.TXML.Message.Order.CustomerInfo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

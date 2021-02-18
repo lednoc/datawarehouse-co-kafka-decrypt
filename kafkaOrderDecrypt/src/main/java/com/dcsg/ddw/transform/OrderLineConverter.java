@@ -2,6 +2,9 @@ package com.dcsg.ddw.transform;
 
 import static java.util.stream.Collectors.groupingBy;
 
+import com.dsg.customerorder.avro.LineItem;
+import com.dsg.customerorder.avro.Order;
+import com.dsg.customerorder.avro.State;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.ComponentDataList;
@@ -9,9 +12,6 @@ import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.LineReferenceFie
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.PriceInfo;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.Quantity;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine.ComponentDataList.ComponentData;
-import com.dsg.customerorder.avro.LineItem;
-import com.dsg.customerorder.avro.Order;
-import com.dsg.customerorder.avro.State;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

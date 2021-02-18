@@ -1,9 +1,9 @@
 package com.dcsg.ddw.transform;
 
 
-import com.dcsg.ddw.eom.TXML.Message.Order.ReferenceFields;
 import com.dsg.customerorder.avro.Order;
 import com.dsg.customerorder.avro.State;
+import com.dcsg.ddw.eom.TXML.Message.Order.ReferenceFields;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;

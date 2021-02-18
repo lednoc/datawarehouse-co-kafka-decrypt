@@ -1,9 +1,9 @@
 package com.dcsg.ddw.transform;
 
+import com.dsg.customerorder.avro.Order;
 import com.dcsg.ddw.eom.TXML;
 import com.dcsg.ddw.eom.TXML.Message;
 import com.dcsg.ddw.eom.TXML.Message.Order.OrderLines.OrderLine;
-import com.dsg.customerorder.avro.Order;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;

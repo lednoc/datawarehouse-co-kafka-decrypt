@@ -1,4 +1,4 @@
-package com.dcsg.ddw;
+package com.dcsg.ddw.util;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

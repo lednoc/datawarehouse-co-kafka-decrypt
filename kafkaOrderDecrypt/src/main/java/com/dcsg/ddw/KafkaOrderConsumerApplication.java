@@ -12,37 +12,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.listener.AbstractConsumerSeekAware;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 
-/*
-import com.dcsg.ddw.ord.OrderDDW;
-import com.dcsg.ddw.ord.OrderHeaderDDW;
-import com.dcsg.ddw.ord.OrderLineDDW;
-import com.dcsg.ddw.ord.OrdersDDW;
-*/
-
-import com.dsg.customerorder.avro.LineItem;
-import com.dsg.customerorder.avro.Order;
-
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.SerializationException;
-import org.apache.kafka.common.record.TimestampType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.dsg.customerorder.avro.LineItem;
+import com.dsg.customerorder.avro.Order;
 import com.dcsg.ddw.util.RSACryptoUtil;
 
 import lombok.extern.slf4j.Slf4j;
-
-
-
-
 
 
 
@@ -82,17 +74,29 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 		 
 	 }
 
-	 @Bean
+	    @Bean
 	    public MessageListener messageListener() {
 	        return new MessageListener();
 	    }
 	 
-	    public class MessageListener {
+	    public class MessageListener extends AbstractConsumerSeekAware{
+	    	
 	    	
 
+	    	
+	    	 /*can use to manually set offsets.  will most likely need in DR senerio.  can use seektotimestamp()
+	    	 @Override
+	    	    public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
+	    	        // Seek all the assigned partition to a certain offset `10234575L`
+	    	        //assignments.keySet().forEach(tp -> callback.seekToEnd(tp.topic(), tp.partition()));
+	    		 assignments.keySet().forEach(tp -> callback.seekToBeginning(tp.topic(), tp.partition()));
+	    	    }	    	
+	    	*/
+
+
+	    	
 
 	        @KafkaListener(id="ddw-order-consumer-spring", topics ="#{@inTopicName}", containerFactory = "kafkaListenerContainerFactory")
-	        //public void orderListener(Order o) {
 	        public void orderListener( Order order, //consume message from input topic
 	        		 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
 	        		 @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition,
@@ -107,14 +111,13 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	        	
 	        	try
 	        	{
-		        	System.out.printf("Records returned: %d%n", serverPort);
+
 		        	if(order!= null) //need null check?
 		        	{
                         
 		        		System.out.printf("processing:  %s%n", key);
 			        	 
-		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   		        		
-			        
+		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   		        					        
 			        	//StopWatch stopWatch = new StopWatch("KafkaTimer");
 			        	//stopWatch.start("initializing");
 		        		
@@ -126,12 +129,11 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 			        	 
 		        	}
 	
-		        
 		        	
-		        	ack.acknowledge();  //new logic; passed basic test
+		        	ack.acknowledge();  //record was processed, so commit offset
 	        	}catch(Exception e)
 	        	{
-	        		log.error("ERROR: " + e.toString()); //e.getLocalizedMessage());	        			
+	        		log.error("ERROR: " + e.toString());	        			
 		        	log.error("ERROR-NotProcessed:  key: {} partition: {}  offset: {}" ,
 		        			key, partition, offset); 
 
@@ -203,9 +205,7 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				    
 				    try {
 
-				      //System.out.println("producer called!");
-				    	
-
+				        //System.out.println("producer called!");				    	
 				    	Gson gson = new GsonBuilder().serializeNulls().create();
 					    kafkaTemplate.send(outputTopic, null, ts, key,gson.toJson(ord));
 
@@ -226,39 +226,5 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 				    
 				  }
 			  
-			  
-			  
-			  /* wont need addCallback() to get send() return code, if fails consumer loop will fail i.e. not ack + this runs slower
-			  private void produceDDWOrders(String key, Order ord) {
-				         
-				       sendMessage(key, ord);				  				      
 
-				  }
-			  
-			  
-			  public void sendMessage( String key, Order ord) {
-				  
-
-					    Gson gson = new GsonBuilder().serializeNulls().create();
-					    
-
-					    ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(outputTopic,key,gson.toJson(ord));					    
-					    future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
-
-					        @Override
-					        public void onSuccess(SendResult<String, String> result) {
-					        	
-					            //System.out.println("Sent message=[" + "T" + 
-					            //  "] with offset=[" + result.getRecordMetadata().offset() + "]");
-					        }
-					        @Override
-					        public void onFailure(Throwable ex) {
-					        	log.error("Unable to send message=[" 
-					              + gson.toJson(ord) + "ERROR : " + ex.getMessage());
-					        }
-					    });
-
-
-
-	    }*/
 }}

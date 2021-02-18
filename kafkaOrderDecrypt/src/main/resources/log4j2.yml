@@ -36,7 +36,7 @@ Configuration:
           pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
         Policies:
           SizeBasedTriggeringPolicy:
-            size: 10 MB
+            size: 4 MB
         DefaultRollOverStrategy:
           max: 30        
         
@@ -51,8 +51,8 @@ Configuration:
         name: com.dcsg.ddw
         level: debug 
         AppenderRef:
-         - ref: FILE
-           level: error
+         #- ref: FILE
+         #  level: error
          - ref: RollingFile_Appender
            level: debug           
 

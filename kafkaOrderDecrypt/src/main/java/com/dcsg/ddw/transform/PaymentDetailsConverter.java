@@ -1,11 +1,11 @@
 package com.dcsg.ddw.transform;
 
+import com.dsg.customerorder.avro.Order;
+import com.dsg.customerorder.avro.Payment;
 import com.dcsg.ddw.eom.TXML.Message.Order.PaymentDetails;
 import com.dcsg.ddw.eom.TXML.Message.Order.PaymentDetails.PaymentDetail;
 import com.dcsg.ddw.eom.TXML.Message.Order.PaymentDetails.PaymentDetail.BillToDetail;
 import com.dcsg.ddw.ord.OrderLineDDW;
-import com.dsg.customerorder.avro.Order;
-import com.dsg.customerorder.avro.Payment;
 import com.dsg.customerorder.enums.PaymentTypeEnum;
 
 import java.math.BigDecimal;
