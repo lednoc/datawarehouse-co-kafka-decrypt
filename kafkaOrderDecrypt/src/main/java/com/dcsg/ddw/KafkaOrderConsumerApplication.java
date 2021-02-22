@@ -19,12 +19,14 @@ import org.springframework.util.StopWatch;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.SerializationException;
+import org.apache.kafka.common.TopicPartition;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -59,11 +61,12 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
     private KafkaTemplate<String, String> kafkaTemplate;
     
     private RSACryptoUtil rsaCryptoUtil;
+    private static boolean partitionsAssignedCalled = false;
     
 	
 	
 	public static void main(String[] args) throws Exception{
-
+		
 		SpringApplication.run(KafkaOrderConsumerApplication.class, args);
 		
 	}
@@ -81,17 +84,22 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	 
 	    public class MessageListener extends AbstractConsumerSeekAware{
 	    	
-	    	
-
-	    	
-	    	 /*can use to manually set offsets.  will most likely need in DR senerio.  can use seektotimestamp()
-	    	 @Override
+	    		    	
+	    	   /*can use to manually set offsets.  will most likely need in DR scenario.  can use seektotimestamp()
+	    	    @Override
 	    	    public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
 	    	        // Seek all the assigned partition to a certain offset `10234575L`
-	    	        //assignments.keySet().forEach(tp -> callback.seekToEnd(tp.topic(), tp.partition()));
-	    		 assignments.keySet().forEach(tp -> callback.seekToBeginning(tp.topic(), tp.partition()));
-	    	    }	    	
-	    	*/
+	    	        // assignments.keySet().forEach(tp -> callback.seekToEnd(tp.topic(), tp.partition()));
+	    	         
+	    	        if(!partitionsAssignedCalled) //only call this on inital startup, not on later rebalances.
+	    	        { 
+	    		              assignments.keySet().forEach(tp -> callback.seekToBeginning(tp.topic(), tp.partition()));
+	    		              partitionsAssignedCalled = true;
+	    		              
+	    		    }
+
+	    	    }*/	    	
+	    	
 
 
 	    	
