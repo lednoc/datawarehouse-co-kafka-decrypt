@@ -80,7 +80,6 @@ public class KafkaConsumerFactoryDDW {
 	  @Value("${spring.kafka.listener.ack-mode}")
 	  private String ackMode;
 
-
 	  @Value("${spring.kafka.security.protocol}")
 	  private String securityProtocol;
 
@@ -154,10 +153,21 @@ public class KafkaConsumerFactoryDDW {
 	        
 	        props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
 	        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, StringDeserializer.class);	            	       	           
-	        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,"false"); //false, so need to set ackmode in container	        
-	        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,"500");  //10 for dev/testing  //500 is default
+	        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,"false"); //false, so need to set ackmode in container	
+	        
+	        
+	        //To decrease max.poll.records says 'take fewer records so there’s enough time to process them' and would favor latency over throughput.
+	        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,"500");  //500 is default  //may want to lower to avoid CommitFailedException
+	        
+	        
+	        //max.poll.interval.ms defines the maximum time between poll invocations.  if it goes over 5 minutes, then… your consumer will leave the group and message will get delivered to another instance.
+	        //The simplest way to avoid such scenario is to limit number of records fetched in a single poll invocation
+	        //If you increase max.poll.interval.ms that says 'it’s ok to spend time processing a large batch of records' and you’ll gain throughput if you can process larger batches more efficiently than smaller ones
+	        //props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG,"??"); //default 5min
 	        
 	        // time consumer can be out of contact w broker.
+	        //heartbeat.interval.ms: The expected time between heartbeats to the consumer coordinator when using Kafka's group management facilities. Heartbeats are used to ensure that the consumer's session stays active and to facilitate rebalancing when new consumers join or leave the group. The value must be set lower than session.timeout.ms, but typically should be set no higher than 1/3 of that value. It can be adjusted even lower to control the expected time for normal rebalances.
+	        //session.timeout.ms: The timeout used to detect client failures when using Kafka's group management facility. The client sends periodic heartbeats to indicate its liveness to the broker. If no heartbeats are received by the broker before the expiration of this session timeout, then the broker will remove this client from the group and initiate a rebalance.
 	        //not sure sweetspot here?
 	        
 	        //following maybe were set on non-platform kafka?
