@@ -22,6 +22,9 @@ import org.springframework.kafka.support.KafkaHeaders;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,6 +37,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.dsg.customerorder.avro.LineItem;
 import com.dsg.customerorder.avro.Order;
+import com.dcsg.ddw.util.OffsetManageUtl;
 import com.dcsg.ddw.util.RSACryptoUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,9 +64,10 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     
+    @Autowired
+    private OffsetManageUtl omu;    
     private RSACryptoUtil rsaCryptoUtil;
-    private static boolean partitionsAssignedCalled = false;
-    
+       
 	
 	
 	public static void main(String[] args) throws Exception{
@@ -84,27 +89,35 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 	 
 	    public class MessageListener extends AbstractConsumerSeekAware{
 	    	
+	    	    ThreadLocal<Boolean> initialSeeksDone  = new ThreadLocal<>(); //do the seeks on the initial assignment and not after a re-balance
 	    		    	
-	    	   /*can use to manually set offsets.  will most likely need in DR scenario.  can use seektotimestamp()
+	    	    //use to manually set offsets.  will most likely need in DR scenario.
 	    	    @Override
 	    	    public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
-	    	        // Seek all the assigned partition to a certain offset `10234575L`
-	    	        // assignments.keySet().forEach(tp -> callback.seekToEnd(tp.topic(), tp.partition()));
-	    	         
-	    	        if(!partitionsAssignedCalled) //only call this on inital startup, not on later rebalances.
+
+	    	    	if (this.initialSeeksDone.get() == null && omu.getTimestamp() > 0 ) 
 	    	        { 
-	    		              assignments.keySet().forEach(tp -> callback.seekToBeginning(tp.topic(), tp.partition()));
-	    		              partitionsAssignedCalled = true;
+	    	    		      //log.info("onPartitionsAssigned called: {} initialSeeksDone:{} ", initialSeeksDone);
+	    		              //assignments.keySet().forEach(tp -> callback.seekToBeginning(tp.topic(), tp.partition() ));
+	    		              // assignments.keySet().forEach(tp -> callback.seekToEnd(tp.topic(), tp.partition()));
+	    		              //callback.seekToTimestamp(assignments.keySet(), offsetTimeStamp);
+	    		              assignments.keySet().forEach(tp -> callback.seekToTimestamp(tp.topic(),tp.partition(), omu.getTimestamp()));
+	    		              this.initialSeeksDone.set(true);
+
 	    		              
+	    		    }else
+	    		    {
+	    		    	super.onPartitionsAssigned(assignments, callback);	    		    	
+	    		    	log.info("super.onPartitionsAssigned called: {} initialSeeksDone:{} ", initialSeeksDone);
 	    		    }
 
-	    	    }*/	    	
+	    	    }    	
 	    	
 
 
 	    	
 
-	        @KafkaListener(id="ddw-order-consumer-spring", topics ="#{@inTopicName}", containerFactory = "kafkaListenerContainerFactory")
+	        @KafkaListener(id="ddw-order-consumer-spring", topics ="#{@inTopicName}", containerFactory = "kafkaListenerContainerFactory", autoStartup = "false")
 	        public void orderListener( Order order, //consume message from input topic
 	        		 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
 	        		 @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition,
@@ -123,7 +136,9 @@ public class KafkaOrderConsumerApplication implements CommandLineRunner {
 		        	if(order!= null) //need null check?
 		        	{
                         
-		        		System.out.printf("processing:  %s%n", key);
+		        		LocalDateTime ldt = Instant.ofEpochMilli(ts).atZone(ZoneId.systemDefault()).toLocalDateTime();
+		        		log.info("processing  key: {} partition: {}  offset: {}:  ts: {}", key, partition, offset, ldt);
+		        		 
 			        	 
 		        		//System.out.println("Current Thread ID- " + Thread.currentThread().getId() + " For Thread- " + Thread.currentThread().getName());   		        					        
 			        	//StopWatch stopWatch = new StopWatch("KafkaTimer");
